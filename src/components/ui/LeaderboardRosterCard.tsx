@@ -2,7 +2,7 @@
 import React from "react";
 import { api } from ":)/utils/api";
 import type { LeagueUserData } from ":)/server/types";
-import { ClipboardListIcon } from "lucide-react";
+import { ClipboardList } from "lucide-react";
 import { Button } from ":)/components/ui/button";
 import {
   Tooltip,
@@ -95,7 +95,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
                 }}
                 variant={"link"}
               >
-                <ClipboardListIcon className="h-6 w-6 text-slate-400 hover:text-white" />
+                <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
