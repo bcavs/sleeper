@@ -1,4 +1,4 @@
-import type { LeagueRosters } from ":)/server/types";
+import type { LeagueRosters, UserData, LeagueData } from ":)/server/types";
 
 export const fetchRosters = async (
   leagueId: string
@@ -26,7 +26,7 @@ export const fetchRosters = async (
   return rosters;
 };
 
-export const fetchLeague = async (leagueId: string) => {
+export const fetchLeague = async (leagueId: string): Promise<LeagueData> => {
   const res = await fetch(`https://api.sleeper.app/v1/league/${leagueId}`);
 
   if (!res.ok) {
@@ -39,10 +39,10 @@ export const fetchLeague = async (leagueId: string) => {
     throw new Error("Unexpected response format");
   }
 
-  return responseBody;
+  return responseBody as LeagueData;
 };
 
-export const fetchUser = async (userId: string) => {
+export const fetchUser = async (userId: string): Promise<UserData> => {
   const res = await fetch(`https://api.sleeper.app/v1/user/${userId}`);
 
   if (!res.ok) {
@@ -55,5 +55,5 @@ export const fetchUser = async (userId: string) => {
     throw new Error("Unexpected response format");
   }
 
-  return responseBody;
+  return responseBody as UserData;
 };

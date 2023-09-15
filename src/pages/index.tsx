@@ -1,35 +1,10 @@
 import Head from "next/head";
 import { api } from ":)/utils/api";
 import { Button } from ":)/components/ui/button";
+import LeaderboardRosterCard from ":)/components/ui/LeaderboardRosterCard";
+import LeagueDisplay from ":)/components/ui/LeagueDisplay";
 
 export default function Home() {
-  const { data, isLoading, isError } = api.sleeper.getRosters.useQuery({
-    leagueId: "992980386516971520",
-  });
-
-  const {
-    data: leagueData,
-    isLoading: leagueIsLoading,
-    isError: leagueIsError,
-  } = api.sleeper.getLeague.useQuery({
-    leagueId: "992980386516971520",
-  });
-
-  if (isLoading || leagueIsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || leagueIsError) {
-    return <div>Error</div>;
-  }
-
-  console.log("data: ", data);
-  console.log("leagueData: ", leagueData);
-
-  const owners = data?.map((roster) => roster.owner_id);
-
-  console.log("owners: ", owners);
-
   return (
     <>
       <Head>
@@ -38,11 +13,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-slate-800">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Sleeper
           </h1>
-          <Button onClick={() => console.log("Yo")}>Yo</Button>
+          <div className="flex w-full justify-around gap-12">
+            <LeagueDisplay leagueId={"992980386516971520"} />
+            <LeagueDisplay leagueId={"992986007853195264"} />
+          </div>
         </div>
       </main>
     </>
