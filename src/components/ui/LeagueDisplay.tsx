@@ -1,4 +1,5 @@
 import LeaderboardRosterCard from ":)/components/ui/LeaderboardRosterCard";
+import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
 
 export default function LeagueDisplay(props: { leagueId: string }) {
@@ -31,31 +32,27 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     return <div>Error</div>;
   }
 
-  console.log("leagueData: ", leagueData);
-  console.log("leagueUsers: ", leagueUsers);
-
-  // sort the order of the rosters by the owners amount of wins
+  // sort the order of the rosters by the owners' amount of wins
   const sortedRosters = data.sort((a, b) => {
     // if the wins are the same, sort by points for
-    if (a.settings.wins === b.settings.wins) {
-      return b.settings.fpts - a.settings.fpts;
+    if (a.settings?.wins === b.settings?.wins) {
+      return b.settings?.fpts - a.settings?.fpts;
     }
 
     // otherwise, sort by wins
-    return b.settings.wins - a.settings.wins;
+    return b.settings?.wins - a.settings?.wins;
   });
 
-  const getUserData = () => {
+  const getUserData = (userId: string) => {
     const userData = leagueUsers.find((user) => {
-      return user.user_id === sortedRosters[0]?.owner_id;
+      return user?.user_id === userId;
     });
 
-    console.log("userData: ", userData);
+    const user = userData as LeagueUserData;
 
-    return userData;
+    return user;
   };
 
-  console.log("sortedRosters: ", sortedRosters);
   return (
     <>
       <section className="flex w-full flex-col">
@@ -68,7 +65,7 @@ export default function LeagueDisplay(props: { leagueId: string }) {
               <LeaderboardRosterCard
                 key={roster.roster_id}
                 roster={roster}
-                userData={getUserData()}
+                userData={getUserData(roster.owner_id)}
               />
             );
           })}

@@ -44,3 +44,20 @@ export type LeagueData = {
   draft_id: string;
   avatar: string;
 };
+
+export type LeagueUserData = {
+  user_id: string;
+  settings: any;
+  metadata: {
+    team_name: string | null;
+    mention_pn: "on" | "off" | null;
+    avatar: string | null;
+    allow_sms: "on" | "off" | null;
+    allow_pn: "on" | "off" | null;
+  };
+  league_id: string;
+  is_owner: boolean | null;
+  is_bot: boolean | null;
+  display_name: string | null;
+  avatar: string | null;
+} | null;

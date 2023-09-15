@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "./button";
 import { api } from ":)/utils/api";
+import type { LeagueUserData } from ":)/server/types";
 
 interface Props {
   // Define component props here
@@ -25,26 +26,12 @@ interface Props {
     owner_id: string;
     league_id: string;
   };
-  userData: {
-    user_id: string;
-    settings: any;
-    metadata: {
-      team_name: string | null;
-      mention_pn: "on" | "off" | null;
-      avatar: string | null;
-      allow_sms: "on" | "off" | null;
-      allow_pn: "on" | "off" | null;
-    };
-    league_id: string;
-    is_owner: boolean | null;
-    is_bot: boolean | null;
-    display_name: string | null;
-    avatar: string | null;
-  } | null;
+  userData: LeagueUserData;
 }
 
 const LeaderboardRosterCard: React.FC<Props> = (props) => {
-  const { roster } = props;
+  const { roster, userData } = props;
+  console.log(userData);
 
   // fetch the user data for the owner of the roster
   const { data, isLoading, isError } = api.sleeper.getUser.useQuery({
@@ -64,8 +51,8 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
   }
 
   return (
-    <li key={roster.roster_id} className="flex flex-col">
-      <div className="flex flex-row justify-between gap-4">
+    <li key={roster.roster_id} className="my-2 flex flex-col">
+      <div className="mb-2 flex flex-row justify-between gap-4">
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-col">
             <h2 className="font-bold text-white">
@@ -73,7 +60,10 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             </h2>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-xl font-bold text-white">{data.username}</h3>
+            <h3 className="text-xl font-bold text-white">
+              {userData?.metadata.team_name ?? `Team ${data.username}`}
+            </h3>
+            <h3 className="text-sm text-slate-400">{data.username}</h3>
             {/* <div className="text-xs text-slate-500">{roster.owner_id}</div> */}
           </div>
         </div>
