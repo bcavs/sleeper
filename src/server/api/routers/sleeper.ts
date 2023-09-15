@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from ":)/server/api/trpc";
-import { fetchRosters, fetchLeague, fetchUser } from ":)/utils/helpers";
+import {
+  fetchRosters,
+  fetchLeague,
+  fetchLeagueUsers,
+  fetchUser,
+} from ":)/utils/helpers";
 
 export const sleeperRouter = createTRPCRouter({
   getLeague: publicProcedure
@@ -18,6 +23,22 @@ export const sleeperRouter = createTRPCRouter({
         throw error;
       }
     }),
+  getLeagueUsers: publicProcedure
+    .input(
+      z.object({
+        leagueId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const leagueUsers = await fetchLeagueUsers(input.leagueId);
+        return leagueUsers;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }),
+
   getRosters: publicProcedure
     .input(
       z.object({

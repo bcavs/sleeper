@@ -26,6 +26,32 @@ export const fetchRosters = async (
   return rosters;
 };
 
+export const fetchLeagueUsers = async (
+  leagueId: string
+): Promise<UserData[]> => {
+  const res = await fetch(
+    `https://api.sleeper.app/v1/league/${leagueId}/users`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch league users");
+  }
+
+  const responseBody: unknown = await res.json();
+
+  if (!Array.isArray(responseBody)) {
+    throw new Error("Unexpected response format");
+  }
+
+  const users = responseBody as UserData[];
+
+  if (!users || users.length === 0) {
+    throw new Error("No users found");
+  }
+
+  return users;
+};
+
 export const fetchLeague = async (leagueId: string): Promise<LeagueData> => {
   const res = await fetch(`https://api.sleeper.app/v1/league/${leagueId}`);
 

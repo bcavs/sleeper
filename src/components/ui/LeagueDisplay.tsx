@@ -15,15 +15,24 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     leagueId,
   });
 
-  if (isLoading || leagueIsLoading) {
+  const {
+    data: leagueUsers,
+    isLoading: leagueUsersIsLoading,
+    isError: leagueUsersIsError,
+  } = api.sleeper.getLeagueUsers.useQuery({
+    leagueId,
+  });
+
+  if (isLoading || leagueIsLoading || leagueUsersIsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError || leagueIsError) {
+  if (isError || leagueIsError || leagueUsersIsError) {
     return <div>Error</div>;
   }
 
   console.log("leagueData: ", leagueData);
+  console.log("leagueUsers: ", leagueUsers);
 
   // sort the order of the rosters by the owners amount of wins
   const sortedRosters = data.sort((a, b) => {
@@ -36,6 +45,16 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     return b.settings.wins - a.settings.wins;
   });
 
+  const getUserData = () => {
+    const userData = leagueUsers.find((user) => {
+      return user.user_id === sortedRosters[0]?.owner_id;
+    });
+
+    console.log("userData: ", userData);
+
+    return userData;
+  };
+
   console.log("sortedRosters: ", sortedRosters);
   return (
     <>
@@ -46,7 +65,11 @@ export default function LeagueDisplay(props: { leagueId: string }) {
         <ul className="flex w-full flex-col gap-4">
           {sortedRosters.map((roster) => {
             return (
-              <LeaderboardRosterCard key={roster.roster_id} roster={roster} />
+              <LeaderboardRosterCard
+                key={roster.roster_id}
+                roster={roster}
+                userData={getUserData()}
+              />
             );
           })}
         </ul>

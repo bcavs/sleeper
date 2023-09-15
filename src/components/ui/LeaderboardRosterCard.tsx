@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Button } from "./button";
 import { api } from ":)/utils/api";
@@ -24,6 +25,22 @@ interface Props {
     owner_id: string;
     league_id: string;
   };
+  userData: {
+    user_id: string;
+    settings: any;
+    metadata: {
+      team_name: string | null;
+      mention_pn: "on" | "off" | null;
+      avatar: string | null;
+      allow_sms: "on" | "off" | null;
+      allow_pn: "on" | "off" | null;
+    };
+    league_id: string;
+    is_owner: boolean | null;
+    is_bot: boolean | null;
+    display_name: string | null;
+    avatar: string | null;
+  } | null;
 }
 
 const LeaderboardRosterCard: React.FC<Props> = (props) => {
