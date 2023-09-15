@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Button } from "./button";
 import { api } from ":)/utils/api";
 import type { LeagueUserData } from ":)/server/types";
+import { ClipboardListIcon } from "lucide-react";
+import { Button } from ":)/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from ":)/components/ui/tooltip";
 
 interface Props {
   // Define component props here
@@ -79,14 +86,25 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             {/* <div className="text-xs text-slate-500">{roster.owner_id}</div> */}
           </div>
         </div>
-        <Button
-          className="bg-slate-500 text-white hover:bg-slate-600"
-          onClick={() => {
-            alert("Coming soon");
-          }}
-        >
-          View Roster
-        </Button>
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                onClick={() => {
+                  alert("Coming soon");
+                }}
+                variant={"link"}
+              >
+                <ClipboardListIcon className="h-6 w-6 text-slate-400 hover:text-white" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <div className="flex flex-col gap-2">
+                <p className="text-xs text-slate-500">View Roster</p>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="flex gap-2">
         <p className="text-xs text-slate-500">
