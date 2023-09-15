@@ -25,18 +25,23 @@ interface Props {
     players: string[];
     owner_id: string;
     league_id: string;
+    metadata: {
+      streak: string | null;
+      record: string | null;
+    };
   };
   userData: LeagueUserData;
 }
 
 const LeaderboardRosterCard: React.FC<Props> = (props) => {
   const { roster, userData } = props;
-  console.log(userData);
 
   // fetch the user data for the owner of the roster
   const { data, isLoading, isError } = api.sleeper.getUser.useQuery({
     userId: roster.owner_id,
   });
+
+  const streak = roster.metadata.streak ?? "";
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -58,9 +63,16 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             <h2 className="font-bold text-white">
               {roster.settings.wins} - {roster.settings.losses}
             </h2>
+            <p
+              className={`${
+                streak.includes("L") ? "text-red-500" : "text-green-500"
+              } text-center text-xs`}
+            >
+              {roster.metadata.streak}
+            </p>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-lg font-bold text-white">
               {userData?.metadata.team_name ?? `Team ${data.username}`}
             </h3>
             <h3 className="text-sm text-slate-400">{data.username}</h3>

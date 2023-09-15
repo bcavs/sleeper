@@ -19,6 +19,10 @@ export type LeagueRosters = {
   players: string[];
   owner_id: string;
   league_id: string;
+  metadata: {
+    streak: string | null;
+    record: string | null;
+  };
 }[];
 
 // Define the UserData type as an object
