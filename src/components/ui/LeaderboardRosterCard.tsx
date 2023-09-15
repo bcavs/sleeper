@@ -79,14 +79,14 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             </p>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-lg font-bold text-white">
+            <h3 className="whitespace-nowrap text-lg font-bold text-white">
               {userData?.metadata.team_name ?? `Team ${data.username}`}
             </h3>
             <h3 className="text-sm text-slate-400">{data.username}</h3>
             {/* <div className="text-xs text-slate-500">{roster.owner_id}</div> */}
           </div>
         </div>
-        <TooltipProvider delayDuration={0}>
+        <TooltipProvider delayDuration={0} disableHoverableContent>
           <Tooltip>
             <TooltipTrigger>
               <Button
@@ -100,7 +100,9 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             </TooltipTrigger>
             <TooltipContent side="bottom">
               <div className="flex flex-col gap-2">
-                <p className="text-xs text-slate-500">View Roster</p>
+                <p className="whitespace-nowrap text-xs text-slate-500">
+                  View Roster
+                </p>
               </div>
             </TooltipContent>
           </Tooltip>
