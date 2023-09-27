@@ -6,12 +6,42 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Player {
+    id                     Int      @id @default(autoincrement())
+    hashtag                String
+    depth_chart_position   Int
+    status                 String
+    sport                  String
+    fantasy_positions      String[]
+    number                 Int
+    search_last_name       String
+    injury_start_date      String?
+    weight                 String
+    position               String
+    practice_participation String?
+    sportradar_id          String
+    team                   String
+    last_name              String
+    college                String
+    fantasy_data_id        Int
+    injury_status          String?
+    player_id              String
+    height                 String
+    search_full_name       String
+    age                    Int
+    stats_id               String
+    birth_country          String
+    espn_id                String
+    search_rank            Int
+    first_name             String
+    depth_chart_order      Int
+    years_exp              Int
+    rotowire_id            String?
+    rotoworld_id           Int?
+    search_first_name      String
+    yahoo_id               String?
 }

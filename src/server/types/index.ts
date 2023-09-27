@@ -65,3 +65,38 @@ export type LeagueUserData = {
   display_name: string | null;
   avatar: string | null;
 } | null;
+
+export type PlayerData = {
+  hashtag: string;
+  depth_chart_position: number;
+  status: string;
+  sport: string;
+  fantasy_positions: string[];
+  number: number;
+  search_last_name: string;
+  injury_start_date: null | string;
+  weight: string;
+  position: string;
+  practice_participation: null | string;
+  sportradar_id: string;
+  team: string;
+  last_name: string;
+  college: string;
+  fantasy_data_id: number;
+  injury_status: null | string;
+  player_id: string;
+  height: string;
+  search_full_name: string;
+  age: number;
+  stats_id: string;
+  birth_country: string;
+  espn_id: string;
+  search_rank: number;
+  first_name: string;
+  depth_chart_order: number;
+  years_exp: number;
+  rotowire_id: null | string;
+  rotoworld_id: number | null;
+  search_first_name: string;
+  yahoo_id: null | string;
+};

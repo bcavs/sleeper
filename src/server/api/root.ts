@@ -1,4 +1,5 @@
 import { sleeperRouter } from ":)/server/api/routers/sleeper";
+import { playersRouter } from ":)/server/api/routers/players";
 import { createTRPCRouter } from ":)/server/api/trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createTRPCRouter } from ":)/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   sleeper: sleeperRouter,
+  players: playersRouter,
 });
 
 // export type definition of API
