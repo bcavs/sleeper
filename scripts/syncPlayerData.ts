@@ -8,21 +8,26 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Syncing Sleeper player data...");
   try {
-    const playerData = await fetchPlayerDataFile();
-    console.log("🟢 Syncing player data to Prisma...");
+    const playerDataObject = await fetchPlayerDataFile();
+    console.log("2️⃣ Syncing player data to Prisma...");
 
-    if (!playerData || playerData.length === 0) {
+    if (!playerDataObject || Object.keys(playerDataObject).length === 0) {
       console.log("🟡 No player data to sync...");
       return;
     }
 
-    // loop through player data and create/update players in Prisma
-    playerData.map((player) => {
-      console.log("🟢 Syncing player: ", player.player_id);
-    });
+    const playerDataArray = Object.values(playerDataObject);
 
-    console.log(playerData[1]);
-    // const players: PlayerData[] = JSON.parse(playerData);
+    // Loop through player data array and create/update players in Prisma
+    for (const p of playerDataArray) {
+      const player = p as PlayerData;
+
+      await prisma.player.upsert({
+        where: { player_id: player.player_id },
+        update: player,
+        create: player,
+      });
+    }
   } catch (error) {
     console.error("Error syncing Sleeper player data:", error);
   } finally {
@@ -44,7 +49,7 @@ const fetchPlayerDataFile = async () => {
     if (exists) {
       console.log("🟡 File exists...");
 
-      const file: PlayerData[] = await Bun.file(filePath).json();
+      const file: PlayerData = await Bun.file(filePath).json();
 
       return file;
     }
