@@ -9,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from ":)/components/ui/tooltip";
+import Link from "next/link";
 
 interface Props {
   // Define component props here
@@ -87,8 +88,10 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
         </div>
         <TooltipProvider delayDuration={0} disableHoverableContent>
           <Tooltip>
-            <TooltipTrigger onClick={() => alert("Coming soon")}>
-              <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
+            <TooltipTrigger>
+              <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
+                <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
+              </Link>
             </TooltipTrigger>
             <TooltipContent side="bottom">
               <div className="flex flex-col gap-2">
