@@ -1,14 +1,7 @@
 import Head from "next/head";
 import LeagueDisplay from ":)/components/ui/LeagueDisplay";
-import { api } from ":)/utils/api";
 
 export default function Home() {
-  const { data, isFetching } = api.players.getPlayerById.useQuery({
-    player_id: "4137",
-  });
-
-  console.log(data);
-
   return (
     <>
       <Head>
