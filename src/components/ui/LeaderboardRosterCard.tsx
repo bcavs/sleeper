@@ -3,7 +3,6 @@ import React from "react";
 import { api } from ":)/utils/api";
 import type { LeagueUserData } from ":)/server/types";
 import { ClipboardList } from "lucide-react";
-import { Button } from ":)/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -88,15 +87,8 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
         </div>
         <TooltipProvider delayDuration={0} disableHoverableContent>
           <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={() => {
-                  alert("Coming soon");
-                }}
-                variant={"link"}
-              >
-                <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
-              </Button>
+            <TooltipTrigger onClick={() => alert("Coming soon")}>
+              <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
             </TooltipTrigger>
             <TooltipContent side="bottom">
               <div className="flex flex-col gap-2">

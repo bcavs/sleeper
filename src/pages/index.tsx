@@ -1,7 +1,14 @@
 import Head from "next/head";
 import LeagueDisplay from ":)/components/ui/LeagueDisplay";
+import { api } from ":)/utils/api";
 
 export default function Home() {
+  const { data, isFetching } = api.players.getPlayerById.useQuery({
+    player_id: "4137",
+  });
+
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -17,6 +24,7 @@ export default function Home() {
           <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
             <LeagueDisplay leagueId={"992980386516971520"} />
             <LeagueDisplay leagueId={"992986007853195264"} />
+            <p></p>
           </div>
         </div>
       </main>

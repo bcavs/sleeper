@@ -65,9 +65,9 @@ export type LeagueUserData = {
   display_name: string | null;
   avatar: string | null;
 } | null;
+
 export type PlayerData = {
-  id?: string | null;
-  // Basic player information
+  id?: string;
   player_id?: string | null;
   full_name?: string | null;
   first_name?: string | null;
@@ -77,8 +77,6 @@ export type PlayerData = {
   search_last_name?: string | null;
   hashtag?: string | null;
   sport?: string | null;
-
-  // Player bio
   age?: number | null;
   birth_date?: string | null;
   birth_country?: string | null;
@@ -86,47 +84,35 @@ export type PlayerData = {
   birth_city?: string | null;
   high_school?: string | null;
   college?: string | null;
-
-  // Player physical attributes
   height?: string | null;
   weight?: string | null;
-
-  // Player career information
   years_exp?: number | null;
   depth_chart_order?: number | null;
-  depth_chart_position?: number | null;
+  depth_chart_position?: string | null;
   team?: string | null;
   position?: string | null;
-
-  // Fantasy-related data
-  fantasy_positions?: string[] | null;
   fantasy_data_id?: number | null;
-
-  // Injury-related data
   injury_status?: string | null;
   injury_start_date?: string | null;
   injury_notes?: string | null;
-
-  // Player statistics and IDs
-  stats_id?: string | null;
-  espn_id?: string | null;
   sportradar_id?: string | null;
-  rotowire_id?: string | null;
   rotoworld_id?: number | null;
-  yahoo_id?: string | null;
   oddsjam_id?: string | null;
   gsis_id?: string | null;
   pandascore_id?: string | null;
-
-  // Player status and participation
   status?: string | null;
   practice_participation?: string | null;
   practice_description?: string | null;
   active?: boolean | null;
-
-  // Miscellaneous data
   number?: number | null;
   search_rank?: number | null;
-  news_updated?: string | null;
+  injury_body_part?: string | null;
+  stats_id?: number | null;
+  rotowire_id?: number | null;
+  fantasy_positions?: string[] | null;
+  yahoo_id?: number | null;
+  espn_id?: number | null;
+  news_updated?: number | null;
+  swish_id?: number | null;
   metadata?: string | null;
 };
