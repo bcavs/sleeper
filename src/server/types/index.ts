@@ -67,6 +67,7 @@ export type LeagueUserData = {
 } | null;
 
 export type PlayerData = {
+  id: string;
   // Basic player information
   player_id: string;
   full_name: string;

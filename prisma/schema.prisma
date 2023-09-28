@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Player {
-    id                Int    @id @default(autoincrement())
+    id                String @id @default(cuid())
     player_id         String @unique
     full_name         String
     first_name        String
