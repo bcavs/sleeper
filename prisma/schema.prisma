@@ -11,37 +11,58 @@ datasource db {
 }
 
 model Player {
-    id                     Int      @id @default(autoincrement())
-    hashtag                String
-    depth_chart_position   Int
+    id                Int    @id @default(autoincrement())
+    player_id         String @unique
+    full_name         String
+    first_name        String
+    last_name         String
+    search_full_name  String
+    search_first_name String
+    search_last_name  String
+    hashtag           String
+    sport             String
+
+    age           Int
+    birth_date    String
+    birth_country String
+    birth_state   String?
+    birth_city    String?
+    high_school   String
+    college       String
+
+    height String
+    weight String
+
+    years_exp            Int
+    depth_chart_order    Int
+    depth_chart_position Int
+    team                 String
+    position             String
+
+    fantasy_positions String[]
+    fantasy_data_id   Int
+
+    injury_status     String?
+    injury_start_date String?
+    injury_notes      String?
+
+    stats_id      String
+    espn_id       String
+    sportradar_id String
+    rotowire_id   String?
+    rotoworld_id  Int?
+    yahoo_id      String?
+    oddsjam_id    String?
+    gsis_id       String?
+    pandascore_id String?
+
     status                 String
-    sport                  String
-    fantasy_positions      String[]
-    number                 Int
-    search_last_name       String
-    injury_start_date      String?
-    weight                 String
-    position               String
     practice_participation String?
-    sportradar_id          String
-    team                   String
-    last_name              String
-    college                String
-    fantasy_data_id        Int
-    injury_status          String?
-    player_id              String
-    height                 String
-    search_full_name       String
-    age                    Int
-    stats_id               String
-    birth_country          String
-    espn_id                String
-    search_rank            Int
-    first_name             String
-    depth_chart_order      Int
-    years_exp              Int
-    rotowire_id            String?
-    rotoworld_id           Int?
-    search_first_name      String
-    yahoo_id               String?
+    practice_description   String?
+    active                 Boolean
+
+    number       Int
+    search_rank  Int
+    news_updated String?
+    metadata     String?
 }

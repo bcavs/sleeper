@@ -67,36 +67,66 @@ export type LeagueUserData = {
 } | null;
 
 export type PlayerData = {
-  hashtag: string;
-  depth_chart_position: number;
-  status: string;
-  sport: string;
-  fantasy_positions: string[];
-  number: number;
-  search_last_name: string;
-  injury_start_date: null | string;
-  weight: string;
-  position: string;
-  practice_participation: null | string;
-  sportradar_id: string;
-  team: string;
-  last_name: string;
-  college: string;
-  fantasy_data_id: number;
-  injury_status: null | string;
+  // Basic player information
   player_id: string;
-  height: string;
-  search_full_name: string;
-  age: number;
-  stats_id: string;
-  birth_country: string;
-  espn_id: string;
-  search_rank: number;
+  full_name: string;
   first_name: string;
-  depth_chart_order: number;
+  last_name: string;
+  search_full_name: string;
+  search_first_name: string;
+  search_last_name: string;
+  hashtag: string;
+  sport: string;
+
+  // Player bio
+  age: number;
+  birth_date: string;
+  birth_country: string;
+  birth_state: null | string;
+  birth_city: null | string;
+  high_school: string;
+  college: string;
+
+  // Player physical attributes
+  height: string;
+  weight: string;
+
+  // Player career information
   years_exp: number;
+  depth_chart_order: number;
+  depth_chart_position: number;
+  team: string;
+  position: string;
+
+  // Fantasy-related data
+  fantasy_positions: string[];
+  fantasy_data_id: number;
+
+  // Injury-related data
+  injury_status: null | string;
+  injury_start_date: null | string;
+  injury_notes: null | string;
+
+  // Player statistics and IDs
+  stats_id: string;
+  espn_id: string;
+  sportradar_id: string;
   rotowire_id: null | string;
   rotoworld_id: number | null;
-  search_first_name: string;
   yahoo_id: null | string;
+  oddsjam_id: null | string;
+  gsis_id: null | string;
+  pandascore_id: null | string;
+
+  // Player status and participation
+  status: string;
+  practice_participation: null | string;
+  practice_description: null | string;
+  active: boolean;
+
+  // Miscellaneous data
+  number: number;
+  search_rank: number;
+  news_updated: null | string;
+  metadata: null | string;
 };
