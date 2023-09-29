@@ -89,9 +89,11 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
         <TooltipProvider delayDuration={0} disableHoverableContent>
           <Tooltip>
             <TooltipTrigger>
-              <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
-                <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
-              </Link>
+              <div>
+                <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
+                  <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
+                </Link>
+              </div>
             </TooltipTrigger>
             <TooltipContent side="bottom">
               <div className="flex flex-col gap-2">
