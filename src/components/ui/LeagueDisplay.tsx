@@ -56,7 +56,7 @@ export default function LeagueDisplay(props: { leagueId: string }) {
   return (
     <>
       <section className="flex w-full flex-col">
-        <h3 className="pb-6 text-2xl font-bold text-slate-300">
+        <h3 className="pb-6 text-2xl font-bold text-indigo-400">
           {leagueData.name}
         </h3>
         <ul className="flex w-full flex-col gap-4">

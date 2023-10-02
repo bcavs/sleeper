@@ -17,6 +17,18 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "sleepercdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+      },
+    ],
+  },
 };
 
 export default config;
