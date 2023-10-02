@@ -1,5 +1,4 @@
 import PlayerCard from ":)/components/ui/PlayerCard";
-import { UserData } from ":)/server/types";
 import { api } from ":)/utils/api";
 import type {
   NextPage,

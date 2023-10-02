@@ -1,5 +1,3 @@
-import LeaderboardRosterCard from ":)/components/ui/LeaderboardRosterCard";
-import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
 import Image from "next/image";
 
