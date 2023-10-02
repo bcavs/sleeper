@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-full">
-        <main className="flex min-h-screen flex-col items-center justify-center bg-slate-800">
+        <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-800">
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-8">
             <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
               <LeagueDisplay leagueId={"992980386516971520"} />

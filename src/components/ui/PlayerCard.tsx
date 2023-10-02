@@ -57,7 +57,6 @@ export default function PlayerCard(props: { playerId: string }) {
         </div>
       </div>
       <div className="flex shrink-0 flex-col items-end">
-        <p className="text-sm leading-6 text-slate-400">{data.position}</p>
         {/* <p className="mt-1 text-xs leading-5 text-gray-500">{props.playerId}</p> */}
       </div>
     </li>
