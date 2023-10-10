@@ -15,7 +15,6 @@ export default function Home() {
             <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
               <LeagueDisplay leagueId={"992980386516971520"} />
               <LeagueDisplay leagueId={"992986007853195264"} />
-              <p></p>
             </div>
           </div>
         </main>
