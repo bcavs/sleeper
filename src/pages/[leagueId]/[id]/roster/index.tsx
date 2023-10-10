@@ -60,21 +60,23 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex min-h-screen flex-col overflow-hidden bg-slate-800 p-6">
-        <section className="mb-6">
-          <h1 className="text-4xl font-bold text-white">
-            {pageUserData?.metadata.team_name ?? `Team ${userData?.username}`}
-          </h1>
-          <h4 className="text-sm text-slate-500">{userData?.username}</h4>
-        </section>
-        <ul
-          role="list"
-          className="flex w-full flex-grow flex-col divide-y divide-slate-600"
-        >
-          {pageRoster?.players.map((player) => {
-            return <PlayerCard key={player} playerId={player} />;
-          })}
-        </ul>
+      <main className="flex min-h-screen flex-col overflow-hidden bg-slate-800 ">
+        <div className="container">
+          <section className="my-6">
+            <h1 className="text-4xl font-bold text-white">
+              {pageUserData?.metadata.team_name ?? `Team ${userData?.username}`}
+            </h1>
+            <h4 className="text-sm text-slate-500">{userData?.username}</h4>
+          </section>
+          <ul
+            role="list"
+            className="flex w-full flex-grow flex-col divide-y divide-slate-600"
+          >
+            {pageRoster?.players.map((player) => {
+              return <PlayerCard key={player} playerId={player} />;
+            })}
+          </ul>
+        </div>
       </main>
     </>
   );
