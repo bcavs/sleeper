@@ -6,11 +6,6 @@ export default function ScoringSettings({
 }: {
   leagueScoringSettings: ScoringSettingsType;
 }) {
-  // sort the scoring settings by alphabetical order of the name of the setting
-  // then map over the sorted array and return a list item for each setting
-  // with the name of the setting and the value of the setting
-  // if no name is found, return the setting key and add a text-red-400 class to it
-
   const sortedScoringSettings = Object.entries(leagueScoringSettings)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value], index) => {
