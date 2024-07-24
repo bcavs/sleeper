@@ -125,7 +125,7 @@ const PromotionRelegationGraphic = () => (
       <div key={team.title + index}>
         <p className="font-bold underline">{team.title}</p>
         {team.members.map((member, index) => (
-          <div className="flex gap-2">
+          <div className="flex gap-2" key={member.name + index}>
             {member.icon}
             <p className="flex" key={index}>
               ({member.name})
