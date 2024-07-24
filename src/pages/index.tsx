@@ -10,11 +10,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-full">
-        <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-800">
+        <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-800 pb-24">
           <div className="container flex flex-col items-center justify-center gap-12 py-8">
             <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
               <LeagueDisplay leagueId={"992980386516971520"} />
               <LeagueDisplay leagueId={"992986007853195264"} />
+            </div>
+          </div>
+          <div className="py-6 text-white">
+            <p className="mb-4 text-[28px] font-light">General Rules:</p>
+
+            <div className="flex flex-col gap-2">
+              <p className="font-bold">
+                Promotions and Relegations are based on a combination of regular
+                season record and playoffs.
+              </p>
+              <div className="pl-8">
+                <p>
+                  1. If you make it to the championship in either league, you
+                  are guaranteed a spot in the top league.
+                </p>
+                <p>
+                  2. The next two promotion spots are determined by the highest
+                  two regular season records.
+                </p>
+                <p>
+                  3. The 4 teams with the lowest regular season records from the
+                  top league will be relegated.
+                </p>
+              </div>
             </div>
           </div>
         </main>
