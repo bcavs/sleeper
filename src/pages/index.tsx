@@ -18,7 +18,7 @@ export default function Home() {
               <LeagueDisplay leagueId={"992986007853195264"} />
             </div>
           </div>
-          <div className="py-6 text-white">
+          <div className="container text-white">
             <p className="mb-4 text-[28px] font-light">General Rules:</p>
 
             <div className="flex flex-col gap-2">
