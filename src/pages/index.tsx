@@ -1,5 +1,6 @@
 import Head from "next/head";
 import LeagueDisplay from ":)/components/ui/LeagueDisplay";
+import { ArrowDown, ArrowUp, Minus } from "lucide-react";
 
 export default function Home() {
   return (
@@ -38,6 +39,78 @@ export default function Home() {
                   3. The 4 teams with the lowest regular season records from the
                   top league will be relegated.
                 </p>
+              </div>
+              <div className="flex w-full flex-col gap-4 pl-8">
+                <div>
+                  <p className="font-bold underline">Top Dawgs</p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    Champion
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    Runner up
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    Best remaining regular season record
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    Next best remaining regular season record
+                  </p>
+                  <p className="flex">
+                    <ArrowDown size={24} className="text-red-500" />
+                    5th Place
+                  </p>
+                  <p className="flex">
+                    <ArrowDown size={24} className="text-red-500" />
+                    6th Place
+                  </p>
+                  <p className="flex">
+                    <ArrowDown size={24} className="text-red-500" />
+                    7th Place
+                  </p>
+                  <p className="flex">
+                    <ArrowDown size={24} className="text-red-500" />
+                    8th Place
+                  </p>
+                </div>
+                <div>
+                  <p className="font-bold underline">Underdawgs</p>
+                  <p className="flex">
+                    <ArrowUp size={24} className="text-green-500" />
+                    Champion
+                  </p>
+                  <p className="flex">
+                    <ArrowUp size={24} className="text-green-500" />
+                    Runner up
+                  </p>
+                  <p className="flex">
+                    <ArrowUp size={24} className="text-green-500" />
+                    Best remaining regular season record
+                  </p>
+                  <p className="flex">
+                    <ArrowUp size={24} className="text-green-500" />
+                    Next best remaining regular season record
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    5th Place
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    6th Place
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    7th Place
+                  </p>
+                  <p className="flex">
+                    <Minus size={24} />
+                    8th Place
+                  </p>
+                </div>
               </div>
             </div>
           </div>
