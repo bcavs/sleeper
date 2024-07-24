@@ -40,7 +40,7 @@ export type LeagueData = {
   settings: any;
   season_type: string;
   season: string;
-  scoring_settings: any;
+  scoring_settings: ScoringSettings;
   roster_positions: any[];
   previous_league_id: string;
   name: string;
@@ -65,6 +65,53 @@ export type LeagueUserData = {
   display_name: string | null;
   avatar: string | null;
 } | null;
+
+export type ScoringSettings = {
+  blk_kick: number;
+  def_st_ff: number;
+  def_st_fum_rec: number;
+  def_st_td: number;
+  def_td: number;
+  ff: number;
+  fgmiss: number;
+  fgm_0_19: number;
+  fgm_20_29: number;
+  fgm_30_39: number;
+  fgm_40_49: number;
+  fgm_50p: number;
+  fum: number;
+  fum_lost: number;
+  fum_rec: number;
+  fum_rec_td: number;
+  int: number;
+  pass_2pt: number;
+  pass_int: number;
+  pass_int_td: number;
+  pass_td: number;
+  pass_td_50p: number;
+  pass_yd: number;
+  pts_allow_0: number;
+  pts_allow_1_6: number;
+  pts_allow_14_20: number;
+  pts_allow_21_27: number;
+  pts_allow_28_34: number;
+  pts_allow_35p: number;
+  pts_allow_7_13: number;
+  rec: number;
+  rec_2pt: number;
+  rec_td: number;
+  rec_yd: number;
+  rush_2pt: number;
+  rush_td: number;
+  rush_yd: number;
+  sack: number;
+  safe: number;
+  st_ff: number;
+  st_fum_rec: number;
+  st_td: number;
+  xpm: number;
+  xpmiss: number;
+};
 
 export type PlayerData = {
   id?: string;

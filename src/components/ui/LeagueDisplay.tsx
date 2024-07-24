@@ -1,6 +1,7 @@
 import LeaderboardRosterCard from ":)/components/ui/LeaderboardRosterCard";
 import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
+import ScoringSettings from "../v2/scoring-settings";
 
 export default function LeagueDisplay(props: { leagueId: string }) {
   const { leagueId } = props;
@@ -74,6 +75,11 @@ export default function LeagueDisplay(props: { leagueId: string }) {
             );
           })}
         </ul>
+        <section className="mt-16">
+          <ScoringSettings
+            leagueScoringSettings={leagueData.scoring_settings}
+          />
+        </section>
       </section>
     </>
   );
