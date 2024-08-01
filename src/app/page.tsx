@@ -1,6 +1,9 @@
+"use client";
 import Head from "next/head";
 import LeagueDisplay from ":)/components/ui/LeagueDisplay";
 import { ArrowDown, ArrowUp, Minus } from "lucide-react";
+import { api } from ":)/utils/api";
+
 const teamsData = [
   {
     title: "Top Dawgs",
@@ -70,7 +73,7 @@ const teamsData = [
   },
 ];
 
-export default function Home() {
+const Page = () => {
   return (
     <>
       <Head>
@@ -130,7 +133,9 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
+
+export default api.withTRPC(Page);
 
 const PromotionRelegationGraphic = () => (
   <div className="flex w-full flex-col gap-4 pl-8">
