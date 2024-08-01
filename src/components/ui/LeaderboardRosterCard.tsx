@@ -48,7 +48,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
     userId: roster.owner_id,
   });
 
-  const streak = roster.metadata.streak ?? "";
+  const streak = roster?.metadata?.streak ?? "";
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -75,7 +75,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
                 streak.includes("L") ? "text-red-500" : "text-green-500"
               } text-center text-xs`}
             >
-              {roster.metadata.streak}
+              {roster?.metadata?.streak}
             </p>
           </div>
           <div className="flex flex-col">
@@ -106,13 +106,17 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
         </TooltipProvider>
       </div>
       <div className="flex gap-2">
-        <p className="text-xs text-slate-500">
-          PF: {roster.settings.fpts}.{roster.settings.fpts_decimal}
-        </p>
-        <p className="text-xs text-slate-500">
-          PA: {roster.settings.fpts_against}.
-          {roster.settings.fpts_against_decimal}
-        </p>
+        {roster.settings.fpts > 0 && (
+          <p className="text-xs text-slate-500">
+            PF: {roster.settings.fpts}.{roster.settings.fpts_decimal}
+          </p>
+        )}
+        {roster.settings.fpts_against > 0 && (
+          <p className="text-xs text-slate-500">
+            PA: {roster.settings.fpts_against}.
+            {roster.settings.fpts_against_decimal}
+          </p>
+        )}
       </div>
     </li>
   );
