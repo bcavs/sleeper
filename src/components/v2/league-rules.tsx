@@ -74,7 +74,8 @@ const LeagueRules = () => (
   <div className="container text-white">
     <p className="mb-4 text-[28px] font-light">General Rules:</p>
 
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col items-start gap-10">
+      <ScoringSettingsDialog leagues={leagues} />
       <div className="flex flex-col gap-2">
         <p className="font-bold">
           Promotions and Relegations are based on a combination of regular
@@ -107,9 +108,6 @@ const LeagueRules = () => (
           </p>
           <LeaguePayoutsGraphic />
         </div>
-      </div>
-      <div className="flex w-full">
-        <ScoringSettingsDialog leagues={leagues} />
       </div>
     </div>
   </div>
