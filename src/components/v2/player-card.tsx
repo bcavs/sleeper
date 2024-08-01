@@ -21,7 +21,7 @@ export default function PlayerCard(props: { playerId: string }) {
           {/* <p className="mt-1 truncate text-xs leading-5 text-gray-500">
             leslie.alexander@example.com
           </p> */}
-          {/* <p className="text-sm font-semibold leading-6 text-white">
+          {/* <p className="text-sm font-semibold leading-6">
             {data.first_name} {data.last_name}
           </p> */}
 
@@ -46,12 +46,10 @@ export default function PlayerCard(props: { playerId: string }) {
               />
             )}
             <div>
-              <h3 className="text-base font-semibold leading-7 tracking-tight text-slate-100">
+              <h3 className="text-base font-semibold leading-7 tracking-tight">
                 {data.first_name} {data.last_name}
               </h3>
-              <p className="text-sm font-semibold leading-6 text-slate-500">
-                {data.position}
-              </p>
+              <p className="text-sm font-semibold leading-6">{data.position}</p>
             </div>
           </div>
         </div>

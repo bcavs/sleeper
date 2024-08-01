@@ -67,7 +67,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
       <div className="mb-2 flex flex-row justify-between gap-4">
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-col">
-            <h2 className="font-bold text-white">
+            <h2 className="font-bold">
               {roster.settings.wins} - {roster.settings.losses}
             </h2>
             <p
@@ -79,7 +79,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             </p>
           </div>
           <div className="flex flex-col">
-            <h3 className="whitespace-nowrap text-lg font-bold text-white">
+            <h3 className="whitespace-nowrap text-lg font-bold">
               {userData?.metadata.team_name ?? `Team ${data.username}`}
             </h3>
             <h3 className="text-sm text-slate-400">{data.username}</h3>
@@ -91,7 +91,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             <div>
               <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
                 <TooltipTrigger>
-                  <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
+                  <ClipboardList className="h-6 w-6" />
                 </TooltipTrigger>
               </Link>
             </div>

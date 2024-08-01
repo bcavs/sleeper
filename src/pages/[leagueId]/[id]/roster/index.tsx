@@ -56,13 +56,13 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex min-h-screen flex-col overflow-hidden bg-slate-800 ">
+      <main className="flex min-h-screen flex-col overflow-hidden">
         <div className="container">
           <section className="my-6">
-            <h1 className="text-4xl font-bold text-white">
+            <h1 className="text-4xl font-bold">
               {pageUserData?.metadata.team_name ?? `Team ${userData?.username}`}
             </h1>
-            <h4 className="text-sm text-slate-500">{userData?.username}</h4>
+            <h4 className="text-sm">{userData?.username}</h4>
           </section>
           <ul
             role="list"

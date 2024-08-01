@@ -9,12 +9,10 @@ function classNames(...classes: string[]) {
 
 const NavBar = () => {
   return (
-    <nav className="bg-slate-800 py-4">
+    <nav className="py-4">
       <div className="container flex items-center">
         <Link href="/">
-          <p className="text-3xl font-bold text-slate-100 underline">
-            Dawg Dynasty
-          </p>
+          <p className="text-3xl font-bold underline">Dawg Dynasty</p>
         </Link>
       </div>
     </nav>
