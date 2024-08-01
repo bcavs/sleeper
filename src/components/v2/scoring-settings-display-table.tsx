@@ -1,17 +1,34 @@
 import { ScoringSettings as ScoringSettingsType } from ":)/server/types";
 import { cn } from ":)/utils";
+import { api } from ":)/utils/api";
 
-export default function ScoringSettings({
-  leagueScoringSettings,
+export default function ScoringSettingsDisplayTable({
+  leagueId,
 }: {
-  leagueScoringSettings: ScoringSettingsType;
+  leagueId: string;
 }) {
+  const {
+    data: leagueData,
+    isLoading: leagueDataIsLoading,
+    isError: leagueDataIsError,
+  } = api.sleeper.getLeague.useQuery({
+    leagueId,
+  });
+
+  if (leagueDataIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (leagueDataIsError) {
+    return <div>Error</div>;
+  }
+
   // sort the scoring settings by alphabetical order of the name of the setting
   // then map over the sorted array and return a list item for each setting
   // with the name of the setting and the value of the setting
   // if no name is found, return the setting key and add a text-red-400 class to it
 
-  const sortedScoringSettings = Object.entries(leagueScoringSettings)
+  const sortedScoringSettings = Object.entries(leagueData.scoring_settings)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value], index) => {
       const name = scoringSettingsNames[key as keyof ScoringSettingsType];
@@ -19,21 +36,20 @@ export default function ScoringSettings({
         <li
           key={key}
           className={cn(
-            `flex w-full p-2 text-slate-200 ${!name && "text-red-400"} ${
-              index % 2 === 0 ? "bg-slate-700" : "bg-slate-900"
+            `flex w-full gap-4 p-2 ${!name && "text-red-400"} ${
+              index % 2 === 0 ? "bg-slate-100" : ""
             }`
           )}
         >
-          <span className="w-full">{name ? name : key}:</span> {value}
+          <span className="w-full">{name ? name : key}:</span>{" "}
+          <span>{value}</span>
         </li>
       );
     });
 
   return (
     <div className="grid grid-cols-1">
-      <h4 className="mb-4 text-[18px] font-bold text-white">
-        League Scoring Settings:
-      </h4>
+      <h4 className="mb-4 text-[18px] font-bold">{leagueData.name}:</h4>
       {sortedScoringSettings}
     </div>
   );

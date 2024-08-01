@@ -1,4 +1,4 @@
-import PlayerCard from ":)/components/ui/PlayerCard";
+import PlayerCard from ":)/components/v2/player-card";
 import { api } from ":)/utils/api";
 import type {
   NextPage,
@@ -39,10 +39,6 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
   } = api.sleeper.getLeagueUsers.useQuery({
     leagueId: leagueId,
   });
-
-  console.log("userData: ", userData);
-  console.log("allRosters: ", allRosters);
-  console.log("leagueData: ", leagueData);
 
   const pageRoster = allRosters?.find((roster) => roster.owner_id === id);
   const pageUserData = leagueData?.find(
