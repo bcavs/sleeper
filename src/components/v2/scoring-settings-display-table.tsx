@@ -1,11 +1,30 @@
 import { ScoringSettings as ScoringSettingsType } from ":)/server/types";
 import { cn } from ":)/utils";
+import { api } from ":)/utils/api";
 
-export default function ScoringSettings({
-  leagueScoringSettings,
+export default function ScoringSettingsDisplayTable({
+  leagueId,
 }: {
-  leagueScoringSettings: ScoringSettingsType;
+  leagueId: string;
 }) {
+  const {
+    data: leagueScoringSettings,
+    isLoading: leagueScoringSettingsIsLoading,
+    isError: leagueScoringSettingsIsError,
+  } = api.sleeper.getLeagueScoringSettings.useQuery({
+    leagueId,
+  });
+
+  console.log("leagueScoringSettings: ", leagueScoringSettings);
+
+  if (leagueScoringSettingsIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (leagueScoringSettingsIsError) {
+    return <div>Error</div>;
+  }
+
   // sort the scoring settings by alphabetical order of the name of the setting
   // then map over the sorted array and return a list item for each setting
   // with the name of the setting and the value of the setting
