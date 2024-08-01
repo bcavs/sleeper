@@ -7,21 +7,19 @@ import {
   DialogTrigger,
 } from ":)/components/ui/dialog";
 import ScoringSettingsDisplayTable from "./scoring-settings-display-table";
+import { Button } from ":)/components/ui/button";
 
 const ScoringSettingsDialog = ({ leagues }: { leagues: string[] }) => {
   return (
     <Dialog>
-      <DialogTrigger className="bg-transparent">
-        Compare league scoring settings
+      <DialogTrigger asChild>
+        <Button>Compare league scoring settings</Button>
       </DialogTrigger>
-      <DialogContent className=" w-[90vw] overflow-scroll">
+      <DialogContent className="w-full overflow-scroll md:w-auto">
         <DialogHeader>
           <DialogTitle>Scoring Settings</DialogTitle>
-          <DialogDescription>
-            Configure the scoring settings for your league.
-          </DialogDescription>
         </DialogHeader>
-        <div className="flex justify-around">
+        <div className="flex justify-center gap-6">
           {leagues.map((leagueId) => (
             <ScoringSettingsDisplayTable key={leagueId} leagueId={leagueId} />
           ))}

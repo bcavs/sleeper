@@ -49,9 +49,7 @@ export default function ScoringSettingsDisplayTable({
 
   return (
     <div className="grid grid-cols-1">
-      <h4 className="mb-4 text-[18px] font-bold text-white">
-        League Scoring Settings:
-      </h4>
+      <h4 className="mb-4 text-[18px] font-bold">{leagueData.name}:</h4>
       {sortedScoringSettings}
     </div>
   );

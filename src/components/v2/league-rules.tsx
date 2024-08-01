@@ -1,4 +1,6 @@
 import { ArrowDown, ArrowUp, Minus } from "lucide-react";
+import { leagues } from ":)/utils/config";
+import ScoringSettingsDialog from "./scoring-settings-dialog";
 const teamsData = [
   {
     title: "Top Dawgs",
@@ -105,6 +107,9 @@ const LeagueRules = () => (
           </p>
           <LeaguePayoutsGraphic />
         </div>
+      </div>
+      <div className="flex w-full">
+        <ScoringSettingsDialog leagues={leagues} />
       </div>
     </div>
   </div>
