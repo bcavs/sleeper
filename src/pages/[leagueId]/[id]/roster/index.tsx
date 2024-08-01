@@ -40,10 +40,6 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
     leagueId: leagueId,
   });
 
-  console.log("userData: ", userData);
-  console.log("allRosters: ", allRosters);
-  console.log("leagueData: ", leagueData);
-
   const pageRoster = allRosters?.find((roster) => roster.owner_id === id);
   const pageUserData = leagueData?.find(
     (roster) => roster?.user_id === pageRoster?.owner_id
