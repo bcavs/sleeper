@@ -1,5 +1,5 @@
 import Head from "next/head";
-import LeagueDisplay from ":)/components/ui/LeagueDisplay";
+import LeagueDisplay from ":)/components/v2/league-display";
 import LeagueRules from ":)/components/v2/league-rules";
 import ScoringSettingsDialog from ":)/components/v2/scoring-settings-dialog";
 

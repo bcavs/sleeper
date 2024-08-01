@@ -1,4 +1,4 @@
-import PlayerCard from ":)/components/ui/PlayerCard";
+import PlayerCard from ":)/components/v2/player-card";
 import { api } from ":)/utils/api";
 import type {
   NextPage,
