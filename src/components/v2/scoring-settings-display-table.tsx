@@ -15,8 +15,6 @@ export default function ScoringSettingsDisplayTable({
     leagueId,
   });
 
-  console.log("leagueScoringSettings: ", leagueScoringSettings);
-
   if (leagueScoringSettingsIsLoading) {
     return <div>Loading...</div>;
   }
@@ -38,12 +36,13 @@ export default function ScoringSettingsDisplayTable({
         <li
           key={key}
           className={cn(
-            `flex w-full p-2 text-slate-200 ${!name && "text-red-400"} ${
-              index % 2 === 0 ? "bg-slate-700" : "bg-slate-900"
+            `flex w-full gap-4 p-2 ${!name && "text-red-400"} ${
+              index % 2 === 0 ? "bg-slate-100" : ""
             }`
           )}
         >
-          <span className="w-full">{name ? name : key}:</span> {value}
+          <span className="w-full">{name ? name : key}:</span>{" "}
+          <span>{value}</span>
         </li>
       );
     });
