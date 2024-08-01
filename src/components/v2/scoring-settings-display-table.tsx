@@ -8,18 +8,18 @@ export default function ScoringSettingsDisplayTable({
   leagueId: string;
 }) {
   const {
-    data: leagueScoringSettings,
-    isLoading: leagueScoringSettingsIsLoading,
-    isError: leagueScoringSettingsIsError,
-  } = api.sleeper.getLeagueScoringSettings.useQuery({
+    data: leagueData,
+    isLoading: leagueDataIsLoading,
+    isError: leagueDataIsError,
+  } = api.sleeper.getLeague.useQuery({
     leagueId,
   });
 
-  if (leagueScoringSettingsIsLoading) {
+  if (leagueDataIsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (leagueScoringSettingsIsError) {
+  if (leagueDataIsError) {
     return <div>Error</div>;
   }
 
@@ -28,7 +28,7 @@ export default function ScoringSettingsDisplayTable({
   // with the name of the setting and the value of the setting
   // if no name is found, return the setting key and add a text-red-400 class to it
 
-  const sortedScoringSettings = Object.entries(leagueScoringSettings)
+  const sortedScoringSettings = Object.entries(leagueData.scoring_settings)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value], index) => {
       const name = scoringSettingsNames[key as keyof ScoringSettingsType];

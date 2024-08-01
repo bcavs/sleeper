@@ -3,6 +3,10 @@ import LeagueDisplay from ":)/components/ui/LeagueDisplay";
 import LeagueRules from ":)/components/v2/league-rules";
 import ScoringSettingsDialog from ":)/components/v2/scoring-settings-dialog";
 
+// Old league IDs: 992980386516971520
+
+const leagues = ["1121980629639372800", "992986007853195264"];
+
 export default function Home() {
   return (
     <>
@@ -14,13 +18,11 @@ export default function Home() {
       <div className="min-h-full">
         <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-800 pb-24">
           <div className="container flex flex-col items-center justify-center gap-12 py-8">
-            <ScoringSettingsDialog
-              leagues={["1121980629639372800", "992986007853195264"]}
-            />
+            <ScoringSettingsDialog leagues={leagues} />
             <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
-              {/* <LeagueDisplay leagueId={"992980386516971520"} /> */}
-              <LeagueDisplay leagueId={"1121980629639372800"} />
-              <LeagueDisplay leagueId={"992986007853195264"} />
+              {leagues.map((leagueId) => (
+                <LeagueDisplay key={leagueId} leagueId={leagueId} />
+              ))}
             </div>
           </div>
           <LeagueRules />

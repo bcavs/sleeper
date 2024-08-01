@@ -12,7 +12,7 @@ const ScoringSettingsDialog = ({ leagues }: { leagues: string[] }) => {
   return (
     <Dialog>
       <DialogTrigger className="bg-transparent">
-        League Scoring Settings
+        Compare league scoring settings
       </DialogTrigger>
       <DialogContent className=" w-[90vw] overflow-scroll">
         <DialogHeader>
