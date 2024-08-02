@@ -1,6 +1,9 @@
-import LeaderboardRosterCard from ":)/components/v2/leaderboard-roster-card";
+import LeaderboardRosterCard, {
+  RosterLoader,
+} from ":)/components/v2/leaderboard-roster-card";
 import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
+import { Skeleton } from "../ui/skeleton";
 
 export default function LeagueDisplay(props: { leagueId: string }) {
   const { leagueId } = props;
@@ -25,7 +28,7 @@ export default function LeagueDisplay(props: { leagueId: string }) {
   });
 
   if (isLoading || leagueIsLoading || leagueUsersIsLoading) {
-    return <div>Loading...</div>;
+    return <SectionLoader />;
   }
 
   if (isError || leagueIsError || leagueUsersIsError) {
@@ -78,3 +81,19 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     </>
   );
 }
+
+const SectionLoader = () => {
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <Skeleton className="h-4 w-20 bg-indigo-400 pb-6" />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+      <RosterLoader />
+    </div>
+  );
+};

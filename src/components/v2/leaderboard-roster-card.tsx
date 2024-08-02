@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from ":)/components/ui/tooltip";
 import Link from "next/link";
+import { Skeleton } from ":)/components/ui/skeleton";
 
 interface Props {
   // Define component props here
@@ -51,7 +52,7 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
   const streak = roster?.metadata?.streak ?? "";
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <RosterLoader />;
   }
 
   if (isError) {
@@ -123,3 +124,24 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
 };
 
 export default LeaderboardRosterCard;
+
+export const RosterLoader = () => (
+  <li className="my-2 flex flex-col">
+    <div className="mb-2 flex flex-row justify-between gap-4">
+      <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-col">
+          <Skeleton className="h-4 w-20" /> {/* Skeleton for wins-losses */}
+          <Skeleton className="mt-2 h-3 w-10" /> {/* Skeleton for streak */}
+        </div>
+        <div className="flex flex-col">
+          <Skeleton className="h-6 w-40" /> {/* Skeleton for team name */}
+          <Skeleton className="mt-2 h-4 w-24" /> {/* Skeleton for username */}
+        </div>
+      </div>
+    </div>
+    <div className="flex gap-4">
+      <Skeleton className="h-4 w-20" /> {/* Skeleton for PF */}
+      <Skeleton className="h-4 w-20" /> {/* Skeleton for PA */}
+    </div>
+  </li>
+);
