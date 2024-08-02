@@ -51,7 +51,7 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
     isError: isErrorRosterPlayers,
   } = api.players.getRosterPlayers.useQuery(
     {
-      player_ids: pageRoster?.players || [],
+      player_ids: pageRoster?.players ?? [],
     },
     {
       enabled: !!pageRoster?.players,
@@ -90,10 +90,9 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
             role="list"
             className="flex w-full flex-grow flex-col divide-y divide-slate-600"
           >
-            {sortedPlayers &&
-              sortedPlayers.map((player) => {
-                return <PlayerCard key={player.player_id} player={player} />;
-              })}
+            {sortedPlayers?.map((player) => {
+              return <PlayerCard key={player.player_id} player={player} />;
+            })}
           </ul>
         </div>
       </main>
