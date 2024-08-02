@@ -8,52 +8,53 @@ datasource db {
 }
 
 model Player {
-  id                     String   @id @default(cuid())
-  player_id              String?  @unique
-  full_name              String?
-  first_name             String?
-  last_name              String?
-  search_full_name       String?
-  search_first_name      String?
-  search_last_name       String?
-  hashtag                String?
-  sport                  String?
+  active                 Boolean?
   age                    Int?
-  birth_date             String?
-  birth_country          String?
-  birth_state            String?
   birth_city             String?
-  high_school            String?
+  birth_country          String?
+  birth_date             String?
+  birth_state            String?
   college                String?
-  height                 String?
-  weight                 String?
-  years_exp              Int?
   depth_chart_order      Int?
   depth_chart_position   String?
-  team                   String?
-  position               String?
-  fantasy_data_id        Int?
-  injury_status          String?
-  injury_start_date      String?
-  injury_notes           String?
-  sportradar_id          String?
-  rotoworld_id           Int?
-  oddsjam_id             String?
-  gsis_id                String?
-  pandascore_id          String?
-  status                 String?
-  practice_participation String?
-  practice_description   String?
-  active                 Boolean?
-  number                 Int?
-  search_rank            Int?
-  injury_body_part       String?
-  stats_id               Int?
-  rotowire_id            Int?
-  fantasy_positions      String[]
-  yahoo_id               Int?
   espn_id                Int?
-  news_updated           Int?
-  swish_id               Int?
+  fantasy_data_id        Int?
+  fantasy_positions      String?
+  first_name             String?
+  full_name              String?
+  gsis_id                String?
+  hashtag                String?
+  height                 String?
+  high_school            String?
+  injury_body_part       String?
+  injury_notes           String?
+  injury_start_date      String?
+  injury_status          String?
+  last_name              String?
   metadata               String?
+  number                 Int?
+  oddsjam_id             String?
+  pandascore_id          String?
+  position               String?
+  practice_description   String?
+  practice_participation String?
+  rotowire_id            Int?
+  rotoworld_id           Int?
+  search_first_name      String?
+  search_full_name       String?
+  search_last_name       String?
+  search_rank            Int?
+  sport                  String?
+  sportradar_id          String?
+  stats_id               Int?
+  status                 String?
+  swish_id               Int?
+  team                   String?
+  weight                 String?
+  yahoo_id               Int?
+  years_exp              Int?
+  news_updated           Int?
+  team_abbr              String?
+  updated_at             DateTime? @db.Timestamptz(6)
+  player_id              String    @id @unique
 }
