@@ -22,4 +22,27 @@ export const playersRouter = createTRPCRouter({
         throw error;
       }
     }),
+
+  getRosterPlayers: publicProcedure
+    .input(
+      z.object({
+        player_ids: z.array(z.string()),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const players = await ctx.prisma.player.findMany({
+          where: {
+            player_id: {
+              in: input.player_ids,
+            },
+          },
+        });
+
+        return players;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }),
 });
