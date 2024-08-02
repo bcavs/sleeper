@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Player {
+model player {
   active                 Boolean?
   age                    Int?
   birth_city             String?

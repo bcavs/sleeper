@@ -1,8 +1,8 @@
 import { api } from ":)/utils/api";
-import { Player } from "@prisma/client";
+import { player } from "@prisma/client";
 import Image from "next/image";
 
-export default function PlayerCard({ player }: { player: Player }) {
+export default function PlayerCard({ player }: { player: player }) {
   return (
     <li className="flex justify-between gap-x-6 py-5">
       <div className="flex min-w-0 gap-x-4">
