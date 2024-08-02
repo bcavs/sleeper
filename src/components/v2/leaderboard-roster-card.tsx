@@ -80,31 +80,15 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
             </p>
           </div>
           <div className="flex flex-col">
-            <h3 className="whitespace-nowrap text-lg font-bold text-white">
-              {userData?.metadata.team_name ?? `Team ${data.username}`}
-            </h3>
+            <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
+              <h3 className="whitespace-nowrap text-lg font-bold text-white hover:text-orange-400">
+                {userData?.metadata.team_name ?? `Team ${data.username}`}
+              </h3>
+            </Link>
             <h3 className="text-sm text-slate-400">{data.username}</h3>
             {/* <div className="text-xs text-slate-500">{roster.owner_id}</div> */}
           </div>
         </div>
-        <TooltipProvider delayDuration={0} disableHoverableContent>
-          <Tooltip>
-            <div>
-              <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
-                <TooltipTrigger>
-                  <ClipboardList className="h-6 w-6 text-slate-400 hover:text-white" />
-                </TooltipTrigger>
-              </Link>
-            </div>
-            <TooltipContent side="bottom">
-              <div className="flex flex-col gap-2">
-                <p className="whitespace-nowrap text-xs text-slate-500">
-                  View Roster
-                </p>
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
       </div>
       <div className="flex gap-2">
         {roster.settings.fpts > 0 && (
