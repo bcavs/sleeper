@@ -87,10 +87,7 @@ const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
             </h1>
             <h4 className="text-sm text-slate-500">{userData?.username}</h4>
           </section>
-          <ul
-            role="list"
-            className="flex w-full flex-grow flex-col divide-y divide-slate-600"
-          >
+          <ul role="list" className="flex w-full flex-grow flex-col gap-4">
             {sortedPlayers?.map((player) => {
               return <PlayerCard key={player.player_id} player={player} />;
             })}
