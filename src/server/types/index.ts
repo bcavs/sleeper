@@ -204,11 +204,11 @@ interface PlayerGameStats {
   fantasyPointsDefault: FantasyPoints;
 }
 
-interface Body {
+export interface PlayerFantasyStatsBody {
   [key: string]: PlayerGameStats;
 }
 
 export interface PlayerFantasyStatsResponse {
   statusCode: number;
-  body: Body;
+  body: PlayerFantasyStatsBody;
 }

@@ -5,6 +5,7 @@ import { cn } from ":)/utils";
 import { api } from ":)/utils/api";
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
+import FantasyStatsDisplay from "./fantasy-stats-display";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   const [isStale, setIsStale] = useState(false);
@@ -90,8 +91,11 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
         </div>
       </div>
 
-      <div>
+      <div className="relative grid h-full w-full grid-cols-1">
         <p>Fantasy Stats</p>
+        {playerData?.fantasy_stats && (
+          <FantasyStatsDisplay fantasy_stats={playerData?.fantasy_stats} />
+        )}
       </div>
 
       {/* Last updated info */}
@@ -100,16 +104,18 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
           Last updated: {player.updated_at?.getMonth()}/
           {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
         </p>
-        <div className="h-1 w-1 rounded-full bg-slate-300" />
         {isStale && (
-          <button
-            onClick={() => {
-              syncPlayerData({ espn_id: player.espn_id ?? 0 });
-            }}
-            className="flex items-center gap-1 text-xs text-red-500"
-          >
-            Refresh <RefreshCw size={12} />
-          </button>
+          <>
+            <div className="h-1 w-1 rounded-full bg-slate-300" />
+            <button
+              onClick={() => {
+                syncPlayerData({ espn_id: player.espn_id ?? 0 });
+              }}
+              className="flex items-center gap-1 text-xs text-red-500"
+            >
+              Refresh <RefreshCw size={12} />
+            </button>
+          </>
         )}
       </div>
     </div>
