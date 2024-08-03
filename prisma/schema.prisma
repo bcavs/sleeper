@@ -17,7 +17,7 @@ model Player {
   college                String?
   depth_chart_order      Int?
   depth_chart_position   String?
-  espn_id                Int?
+  espn_id                Int?      @unique
   fantasy_data_id        Int?
   fantasy_positions      String?
   first_name             String?
