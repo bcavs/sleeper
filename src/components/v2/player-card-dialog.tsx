@@ -28,7 +28,7 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     const today = new Date();
 
     //!!: DEBUG SET DATE 3 DAYS IN FUTURE
-    today.setDate(today.getDate() + 3);
+    // today.setDate(today.getDate() + 3);
 
     const diff = today.getTime() - updated.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
