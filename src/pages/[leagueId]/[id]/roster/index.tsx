@@ -78,11 +78,36 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
 
       <main className="flex min-h-screen flex-col overflow-hidden bg-slate-800 pb-32">
         <div className="container">
-          <section className="my-6">
-            <h1 className="text-4xl font-bold text-white">
-              {pageUserData?.metadata.team_name ?? `Team ${userData?.username}`}
-            </h1>
-            <h4 className="text-sm text-slate-500">{userData?.username}</h4>
+          <section className="my-6 grid md:grid-cols-2">
+            <div>
+              <h1 className="text-4xl font-bold text-white">
+                {pageUserData?.metadata.team_name ??
+                  `Team ${userData?.username}`}
+              </h1>
+              <h4 className="text-sm text-slate-500">{userData?.username}</h4>
+            </div>
+            <div className="grid grid-cols-3 items-center pt-4 text-white md:pt-0">
+              <div className="flex flex-col place-items-center">
+                <p className="text-lg font-bold">
+                  {pageRoster?.settings.wins} - {pageRoster?.settings.losses}
+                </p>
+                <p className="text-xs text-slate-500">Record</p>
+              </div>
+              <div className="flex flex-col place-items-center">
+                <p className="text-lg font-bold">
+                  {pageRoster?.settings.fpts}.
+                  {pageRoster?.settings.fpts_decimal}
+                </p>
+                <p className="text-xs text-slate-500">Points for</p>
+              </div>
+              <div className="flex flex-col place-items-center">
+                <p className="text-lg font-bold">
+                  {pageRoster?.settings.fpts_against}.
+                  {pageRoster?.settings.fpts_against_decimal}
+                </p>
+                <p className="text-xs text-slate-500">Points against</p>
+              </div>
+            </div>
           </section>
           <ul role="list" className="flex w-full flex-grow flex-col gap-4">
             {sortedPlayers?.map((player) => {
