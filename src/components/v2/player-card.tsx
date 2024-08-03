@@ -1,6 +1,6 @@
 import { cn } from ":)/utils";
 import { api } from ":)/utils/api";
-import { player } from "@prisma/client";
+import { Player } from "@prisma/client";
 import Image from "next/image";
 import {
   Dialog,
@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from ":)/components/ui/dialog";
 
-export default function PlayerCard({ player }: { player: player }) {
+export default function PlayerCard({ player }: { player: Player }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -83,7 +83,7 @@ export default function PlayerCard({ player }: { player: player }) {
   );
 }
 
-const PlayerDialogCard = ({ player }: { player: player }) => {
+const PlayerDialogCard = ({ player }: { player: Player }) => {
   return (
     <div className="flex items-center gap-4">
       {player.position === "DEF" ? (

@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model player {
+model Player {
   active                 Boolean?
   age                    Int?
   birth_city             String?
@@ -56,10 +56,10 @@ model player {
   team_abbr              String?
   updated_at             DateTime? @db.Timestamptz(6)
   player_id              String    @id @unique
-  team                   team?     @relation(fields: [team_abbr], references: [abbreviation])
+  team                   Team?     @relation(fields: [team_abbr], references: [abbreviation])
 }
 
-model team {
+model Team {
   id               String
   uid              String
   slug             String
@@ -73,29 +73,21 @@ model team {
   alternateColor   String
   isActive         Boolean
   isAllStar        Boolean
-  logos            logo[]
-  links            link[]
-  players          player[]
+  logos            Logo[]
+  links            Link[]
+  players          Player[]
 }
 
-model logo {
-  href   String    @id
+model Logo {
+  href   String @id
   alt    String
   width  Int
   height Int
   teamId String
-  team   team      @relation(fields: [teamId], references: [abbreviation])
-  rel    logoRel[]
+  team   Team   @relation(fields: [teamId], references: [abbreviation])
 }
 
-model logoRel {
-  id     Int    @id @default(autoincrement())
-  value  String
-  logoId String
-  logo   logo   @relation(fields: [logoId], references: [href])
-}
-
-model link {
+model Link {
   href       String  @id
   language   String
   text       String
@@ -104,5 +96,5 @@ model link {
   isPremium  Boolean
   isHidden   Boolean
   teamId     String
-  team       team    @relation(fields: [teamId], references: [abbreviation])
+  team       Team    @relation(fields: [teamId], references: [abbreviation])
 }
