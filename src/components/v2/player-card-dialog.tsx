@@ -10,17 +10,12 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
   const [isStale, setIsStale] = useState(false);
   console.log(player);
 
-  const { data, isLoading, isError, refetch } =
-    api.players.getPlayerFantasyStatsById.useQuery(
-      {
-        espn_id: player.espn_id ?? 0,
+  const { mutate: syncPlayerData } =
+    api.players.syncPlayerFantasyStatsById.useMutation({
+      onSuccess: (data) => {
+        console.log("Data: ", data);
       },
-      {
-        enabled: false,
-      }
-    );
-
-  console.log("data: ", data);
+    });
 
   //if the player.updated_at is more than 2 days, show a warning
   if (player.updated_at) {
@@ -28,7 +23,7 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     const today = new Date();
 
     //!!: DEBUG SET DATE 3 DAYS IN FUTURE
-    // today.setDate(today.getDate() + 3);
+    today.setDate(today.getDate() + 3);
 
     const diff = today.getTime() - updated.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
@@ -91,7 +86,7 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
         {isStale && (
           <button
             onClick={() => {
-              refetch();
+              syncPlayerData({ espn_id: player.espn_id ?? 0 });
             }}
             className="flex items-center gap-1 text-xs text-red-500"
           >

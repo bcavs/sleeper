@@ -3,6 +3,7 @@ import type {
   UserData,
   LeagueData,
   LeagueUserData,
+  PlayerFantasyStatsResponse,
 } from ":)/server/types";
 
 export const fetchRosters = async (
@@ -116,5 +117,5 @@ export const fetchPlayerFantasyStats = async ({
     throw new Error("Unexpected response format");
   }
 
-  return responseBody;
+  return responseBody as PlayerFantasyStatsResponse;
 };

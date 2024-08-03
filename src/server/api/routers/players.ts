@@ -42,6 +42,42 @@ export const playersRouter = createTRPCRouter({
       }
     }),
 
+  syncPlayerFantasyStatsById: publicProcedure
+    .input(
+      z.object({
+        espn_id: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const playerFantasyStats = await fetchPlayerFantasyStats({
+          playerId: input.espn_id,
+        });
+
+        if (!playerFantasyStats) {
+          throw new Error("Failed to fetch player fantasy stats");
+        }
+
+        if (playerFantasyStats.statusCode !== 200) {
+          throw new Error("Failed to fetch player fantasy stats");
+        }
+
+        await ctx.prisma.player.update({
+          where: {
+            espn_id: input.espn_id,
+          },
+          data: {
+            fantasy_stats: JSON.stringify(playerFantasyStats.body),
+          },
+        });
+
+        return playerFantasyStats;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }),
+
   getRosterPlayers: publicProcedure
     .input(
       z.object({

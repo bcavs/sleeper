@@ -163,3 +163,52 @@ export type PlayerData = {
   swish_id?: number | null;
   metadata?: string | null;
 };
+
+interface RushingStats {
+  rushAvg: string;
+  rushYds: string;
+  carries: string;
+  longRush: string;
+  rushTD: string;
+}
+
+interface ScoringPlay {
+  score: string;
+  scorePeriod: string;
+  homeScore: string;
+  awayScore: string;
+  teamID: string;
+  scoreDetails: string;
+  scoreType: string;
+  scoreTime: string;
+  team: string;
+  playerIDs: string[];
+}
+
+interface FantasyPoints {
+  standard: string;
+  PPR: string;
+  halfPPR: string;
+}
+
+interface PlayerGameStats {
+  teamAbv: string;
+  longName: string;
+  Rushing: RushingStats;
+  scoringPlays: ScoringPlay[];
+  playerID: string;
+  team: string;
+  teamID: string;
+  gameID: string;
+  fantasyPoints: string;
+  fantasyPointsDefault: FantasyPoints;
+}
+
+interface Body {
+  [key: string]: PlayerGameStats;
+}
+
+export interface PlayerFantasyStatsResponse {
+  statusCode: number;
+  body: Body;
+}

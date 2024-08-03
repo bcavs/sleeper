@@ -57,6 +57,7 @@ model Player {
   updated_at             DateTime? @db.Timestamptz(6)
   player_id              String    @id @unique
   team                   Team?     @relation(fields: [team_abbr], references: [abbreviation])
+  fantasy_stats          Json      @default("{}")
 }
 
 model Team {
