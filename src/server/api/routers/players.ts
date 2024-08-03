@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from ":)/server/api/trpc";
+import { fetchPlayerFantasyStats } from ":)/utils/helpers";
 
 export const playersRouter = createTRPCRouter({
   getPlayerById: publicProcedure
@@ -17,6 +18,24 @@ export const playersRouter = createTRPCRouter({
         });
 
         return player;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }),
+
+  getPlayerDetailsById: publicProcedure
+    .input(
+      z.object({
+        espn_id: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const league = await fetchPlayerFantasyStats({
+          playerId: input.espn_id,
+        });
+        return league;
       } catch (error) {
         console.error(error);
         throw error;

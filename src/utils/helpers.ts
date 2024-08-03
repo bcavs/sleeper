@@ -88,3 +88,27 @@ export const fetchUser = async (userId: string): Promise<UserData> => {
 
   return responseBody as UserData;
 };
+
+export const fetchPlayerFantasyStats = async ({
+  playerId,
+}: {
+  playerId: number;
+}) => {
+  const url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=${playerId}&fantasyPoints=true&twoPointConversions=2&passYards=.04&passTD=4&passInterceptions=-2&pointsPerReception=1&carries=.2&rushYards=.1&rushTD=6&fumbles=-2&receivingYards=.1&receivingTD=6&targets=0&defTD=6&xpMade=1&xpMissed=-1&fgMade=3&fgMissed=-3`;
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": process.env.RAPID_API_KEY ?? "",
+      "x-rapidapi-host":
+        "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.text();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
