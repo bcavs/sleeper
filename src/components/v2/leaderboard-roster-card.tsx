@@ -92,21 +92,32 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div className="flex gap-2">
-        <h2 className="whitespace-nowrap text-xs font-bold text-white md:hidden">
-          {roster.settings.wins} - {roster.settings.losses}
-        </h2>
-        {roster.settings.fpts > 0 && (
-          <p className="hidden text-xs text-slate-500 md:block">
-            PF: {roster.settings.fpts}.{roster.settings.fpts_decimal}
+      <div className="flex flex-col">
+        <div className="flex gap-2">
+          <h2 className="whitespace-nowrap text-xs font-bold text-white md:hidden">
+            {roster.settings.wins} - {roster.settings.losses}
+          </h2>
+          <p
+            className={`${
+              streak.includes("L") ? "text-red-500" : "text-green-500"
+            }  text-center text-xs md:hidden`}
+          >
+            {roster?.metadata?.streak}
           </p>
-        )}
-        {roster.settings.fpts_against > 0 && (
-          <p className="hidden text-xs text-slate-500 md:block">
-            PA: {roster.settings.fpts_against}.
-            {roster.settings.fpts_against_decimal}
-          </p>
-        )}
+        </div>
+        <div className="flex gap-2">
+          {roster.settings.fpts > 0 && (
+            <p className="text-xs text-slate-500">
+              PF: {roster.settings.fpts}.{roster.settings.fpts_decimal}
+            </p>
+          )}
+          {roster.settings.fpts_against > 0 && (
+            <p className="text-xs text-slate-500">
+              PA: {roster.settings.fpts_against}.
+              {roster.settings.fpts_against_decimal}
+            </p>
+          )}
+        </div>
       </div>
     </li>
   );
@@ -118,12 +129,13 @@ export const RosterLoader = () => (
   <li className="my-2 flex flex-col">
     <div className="mb-2 flex flex-row justify-between gap-4">
       <div className="flex flex-row items-center gap-4">
-        <div className="flex flex-col">
+        <div className="hidden flex-col md:flex">
           <Skeleton className="h-4 w-20" /> {/* Skeleton for wins-losses */}
           <Skeleton className="mt-2 h-3 w-10" /> {/* Skeleton for streak */}
         </div>
         <div className="flex flex-col">
-          <Skeleton className="h-6 w-40" /> {/* Skeleton for team name */}
+          <Skeleton className="h-4 w-40 md:h-6" />{" "}
+          {/* Skeleton for team name */}
           <Skeleton className="mt-2 h-4 w-24" /> {/* Skeleton for username */}
         </div>
       </div>
