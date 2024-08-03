@@ -5,12 +5,10 @@ import Image from "next/image";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from ":)/components/ui/dialog";
-import { Skeleton } from "../ui/skeleton";
+import PlayerCardDialog from ":)/components/v2/player-card-dialog";
 
 export default function PlayerCard({ player }: { player: Player }) {
   return (
@@ -78,60 +76,9 @@ export default function PlayerCard({ player }: { player: Player }) {
         </li>
       </DialogTrigger>
       <DialogContent className="max-w-lg">
-        <PlayerDialogCard player={player} />
+        <DialogTitle className="hidden">{player.full_name}</DialogTitle>
+        <PlayerCardDialog player={player} />
       </DialogContent>
     </Dialog>
   );
 }
-
-const PlayerDialogCard = ({ player }: { player: Player }) => {
-  console.log(player);
-  return (
-    <div className="flex items-center gap-4">
-      {player.position === "DEF" ? (
-        <Image
-          src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
-          alt={`${player.first_name} ${player.last_name}`}
-          width={100}
-          height={66}
-          className="rounded-full"
-        />
-      ) : (
-        <Image
-          src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
-          alt={`${player.first_name} ${player.last_name}`}
-          width={100}
-          height={66}
-          className="rounded-full"
-        />
-      )}
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1">
-          <h3 className="text-lg font-semibold">
-            {player.first_name} {player.last_name}
-          </h3>
-          <p className="text-xs text-slate-400">{player.number}</p>
-        </div>
-        <div className="flex items-center gap-1 text-slate-500">
-          <Skeleton
-            className={cn("h-2 w-2", {
-              "bg-red-500": player.position === "QB",
-              "bg-blue-500": player.position === "WR",
-              "bg-green-500": player.position === "RB",
-              "bg-orange-500": player.position === "TE",
-              "bg-purple-500": player.position === "K",
-              "bg-amber-900": player.position === "DEF",
-            })}
-          />
-          <p className="text-sm font-semibold leading-6 ">{player.position}</p>{" "}
-          -
-          <p className="text-sm font-semibold leading-6 ">{player.team_abbr}</p>
-        </div>
-      </div>
-      <p className="absolute bottom-1 right-2 text-xs text-slate-300">
-        Last updated: {player.updated_at?.getMonth()}/
-        {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
-      </p>
-    </div>
-  );
-};
