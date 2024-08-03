@@ -3,7 +3,7 @@ import LeaderboardRosterCard, {
 } from ":)/components/v2/leaderboard-roster-card";
 import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from ":)/components/ui/skeleton";
 
 export default function LeagueDisplay(props: { leagueId: string }) {
   const { leagueId } = props;
@@ -35,6 +35,16 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     return <div>Error</div>;
   }
 
+  const getUserData = (userId: string) => {
+    const userData = leagueUsers.find((user) => {
+      return user?.user_id === userId;
+    });
+
+    const user = userData as LeagueUserData;
+
+    return user;
+  };
+
   // sort the order of the rosters by the owners' amount of wins
   const sortedRosters = data.sort((a, b) => {
     // if the wins are the same, sort by points for
@@ -50,23 +60,13 @@ export default function LeagueDisplay(props: { leagueId: string }) {
     return b.settings?.wins - a.settings?.wins;
   });
 
-  const getUserData = (userId: string) => {
-    const userData = leagueUsers.find((user) => {
-      return user?.user_id === userId;
-    });
-
-    const user = userData as LeagueUserData;
-
-    return user;
-  };
-
   return (
     <>
       <section className="flex w-full flex-col">
-        <h3 className="pb-6 text-2xl font-bold text-indigo-400">
+        <h3 className="pb-2 font-bold text-indigo-400 md:pb-6 md:text-2xl">
           {leagueData.name}
         </h3>
-        <ul className="flex w-full flex-col gap-4">
+        <ul className="flex w-full flex-col md:gap-4">
           {sortedRosters.map((roster) => {
             return (
               <LeaderboardRosterCard

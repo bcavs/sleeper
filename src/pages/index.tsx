@@ -13,12 +13,10 @@ export default function Home() {
       </Head>
       <div className="min-h-full bg-slate-800">
         <main className="container flex min-h-screen flex-col items-center justify-center overflow-hidden pb-24">
-          <div className="flex w-full flex-col items-center justify-center gap-12 py-8">
-            <div className="flex w-full flex-col justify-around gap-12 md:flex-row">
-              {leagues.map((leagueId) => (
-                <LeagueDisplay key={leagueId} leagueId={leagueId} />
-              ))}
-            </div>
+          <div className="grid w-full grid-cols-2 justify-around gap-4 md:gap-12 ">
+            {leagues.map((leagueId) => (
+              <LeagueDisplay key={leagueId} leagueId={leagueId} />
+            ))}
           </div>
           <LeagueRules />
         </main>

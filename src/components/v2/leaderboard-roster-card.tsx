@@ -65,39 +65,44 @@ const LeaderboardRosterCard: React.FC<Props> = (props) => {
 
   return (
     <li key={roster.roster_id} className="my-2 flex flex-col">
-      <div className="mb-2 flex flex-row justify-between gap-4">
-        <div className="flex flex-row items-center gap-4">
+      <div className="flex flex-row justify-between gap-4 md:mb-2">
+        <div className="flex flex-row items-center md:gap-4">
           <div className="flex flex-col">
-            <h2 className="font-bold text-white">
+            <h2 className="hidden whitespace-nowrap text-xs font-bold text-white md:block">
               {roster.settings.wins} - {roster.settings.losses}
             </h2>
             <p
               className={`${
                 streak.includes("L") ? "text-red-500" : "text-green-500"
-              } text-center text-xs`}
+              } hidden text-center text-xs md:block`}
             >
               {roster?.metadata?.streak}
             </p>
           </div>
           <div className="flex flex-col">
             <Link href={`${roster.league_id}/${roster.owner_id}/roster`}>
-              <h3 className="whitespace-nowrap text-lg font-bold text-white hover:text-orange-400">
+              <h3 className="whitespace-nowrap text-sm font-bold text-white hover:text-orange-400 md:text-lg">
                 {userData?.metadata.team_name ?? `Team ${data.username}`}
               </h3>
             </Link>
-            <h3 className="text-sm text-slate-400">{data.username}</h3>
+            <h3 className="hidden text-sm text-slate-400 md:block">
+              {data.username}
+            </h3>
             {/* <div className="text-xs text-slate-500">{roster.owner_id}</div> */}
           </div>
         </div>
       </div>
       <div className="flex gap-2">
+        <h2 className="whitespace-nowrap text-xs font-bold text-white md:hidden">
+          {roster.settings.wins} - {roster.settings.losses}
+        </h2>
         {roster.settings.fpts > 0 && (
-          <p className="text-xs text-slate-500">
+          <p className="hidden text-xs text-slate-500 md:block">
             PF: {roster.settings.fpts}.{roster.settings.fpts_decimal}
           </p>
         )}
         {roster.settings.fpts_against > 0 && (
-          <p className="text-xs text-slate-500">
+          <p className="hidden text-xs text-slate-500 md:block">
             PA: {roster.settings.fpts_against}.
             {roster.settings.fpts_against_decimal}
           </p>
