@@ -58,3 +58,50 @@ model player {
   updated_at             DateTime? @db.Timestamptz(6)
   player_id              String    @id @unique
 }
+
+model team {
+  id               String
+  uid              String
+  slug             String
+  abbreviation     String  @id
+  displayName      String
+  shortDisplayName String
+  name             String
+  nickname         String
+  location         String
+  color            String
+  alternateColor   String
+  isActive         Boolean
+  isAllStar        Boolean
+  logos            logo[]
+  links            link[]
+}
+
+model logo {
+  href   String    @id
+  alt    String
+  width  Int
+  height Int
+  teamId String
+  team   team      @relation(fields: [teamId], references: [abbreviation])
+  rel    logoRel[]
+}
+
+model logoRel {
+  id     Int    @id @default(autoincrement())
+  value  String
+  logoId String
+  logo   logo   @relation(fields: [logoId], references: [href])
+}
+
+model link {
+  href       String  @id
+  language   String
+  text       String
+  shortText  String
+  isExternal Boolean
+  isPremium  Boolean
+  isHidden   Boolean
+  teamId     String
+  team       team    @relation(fields: [teamId], references: [abbreviation])
+}
