@@ -92,19 +92,17 @@ const PlayerDialogCard = ({ player }: { player: Player }) => {
         <Image
           src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
           alt={`${player.first_name} ${player.last_name}`}
-          width={50}
-          height={50}
-          className="h-16 w-16 rounded-full"
-          style={{ height: "auto", width: "auto" }}
+          width={100}
+          height={100}
+          className="rounded-full"
         />
       ) : (
         <Image
           src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
           alt={`${player.first_name} ${player.last_name}`}
-          width={50}
-          className="h-16 w-16 rounded-full"
-          height={50}
-          style={{ height: "auto", width: "auto" }}
+          width={100}
+          height={100}
+          className="rounded-full"
         />
       )}
       <div className="flex flex-col">
