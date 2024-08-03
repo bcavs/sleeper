@@ -13,10 +13,10 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
 
   const { mutate: syncPlayerData } =
     api.players.syncPlayerFantasyStatsById.useMutation({
-      onSuccess: () => {
+      onSuccess: async () => {
         setIsStale(false);
         console.log("🌟 Player data synced.");
-        refetch();
+        await refetch();
       },
     });
 
