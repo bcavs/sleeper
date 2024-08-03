@@ -6,7 +6,6 @@ import {
   fetchLeagueUsers,
   fetchUser,
 } from ":)/utils/helpers";
-import { ScoringSettings } from ":)/server/types";
 
 export const sleeperRouter = createTRPCRouter({
   getLeague: publicProcedure
