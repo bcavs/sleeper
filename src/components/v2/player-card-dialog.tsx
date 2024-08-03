@@ -16,13 +16,17 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
       },
     });
 
+  const { data: playerData } = api.players.getPlayerById.useQuery({
+    player_id: player.player_id,
+  });
+
   //if the player.updated_at is more than 2 days, add refresh button
   if (player.updated_at) {
     const updated = new Date(player.updated_at);
     const today = new Date();
 
     //!!: DEBUG SET DATE 3 DAYS IN FUTURE
-    today.setDate(today.getDate() + 3);
+    // today.setDate(today.getDate() + 3);
 
     const diff = today.getTime() - updated.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
@@ -36,49 +40,61 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
   }
 
   return (
-    <div className="flex items-center gap-4">
-      {player.position === "DEF" ? (
-        <Image
-          src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
-          alt={`${player.first_name} ${player.last_name}`}
-          width={100}
-          height={66}
-          className="rounded-full"
-          style={{ height: "auto", width: "auto" }}
-        />
-      ) : (
-        <Image
-          src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
-          alt={`${player.first_name} ${player.last_name}`}
-          width={100}
-          height={66}
-          className="rounded-full"
-          style={{ height: "auto", width: "auto" }}
-        />
-      )}
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1">
-          <h3 className="text-lg font-semibold">
-            {player.first_name} {player.last_name}
-          </h3>
-          <p className="text-xs text-slate-400">{player.number}</p>
-        </div>
-        <div className="flex items-center gap-1 text-slate-500">
-          <Skeleton
-            className={cn("h-2 w-2", {
-              "bg-red-500": player.position === "QB",
-              "bg-blue-500": player.position === "WR",
-              "bg-green-500": player.position === "RB",
-              "bg-orange-500": player.position === "TE",
-              "bg-purple-500": player.position === "K",
-              "bg-amber-900": player.position === "DEF",
-            })}
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex w-full items-center">
+        {player.position === "DEF" ? (
+          <Image
+            src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
+            alt={`${player.first_name} ${player.last_name}`}
+            width={100}
+            height={66}
+            className="rounded-full"
+            style={{ height: "auto", width: "auto" }}
           />
-          <p className="text-sm font-semibold leading-6 ">{player.position}</p>{" "}
-          -
-          <p className="text-sm font-semibold leading-6 ">{player.team_abbr}</p>
+        ) : (
+          <Image
+            src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
+            alt={`${player.first_name} ${player.last_name}`}
+            width={100}
+            height={66}
+            className="rounded-full"
+            style={{ height: "auto", width: "auto" }}
+          />
+        )}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1">
+            <h3 className="text-lg font-semibold">
+              {player.first_name} {player.last_name}
+            </h3>
+            <p className="text-xs text-slate-400">{player.number}</p>
+          </div>
+          <div className="flex items-center gap-1 text-slate-500">
+            <Skeleton
+              className={cn("h-2 w-2", {
+                "bg-red-500": player.position === "QB",
+                "bg-blue-500": player.position === "WR",
+                "bg-green-500": player.position === "RB",
+                "bg-orange-500": player.position === "TE",
+                "bg-purple-500": player.position === "K",
+                "bg-amber-900": player.position === "DEF",
+              })}
+            />
+            <p className="text-sm font-semibold leading-6 ">
+              {player.position}
+            </p>{" "}
+            -
+            <p className="text-sm font-semibold leading-6 ">
+              {player.team_abbr}
+            </p>
+          </div>
         </div>
       </div>
+
+      <div>
+        <p>Fantasy Stats</p>
+      </div>
+
+      {/* Last updated info */}
       <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
         <p>
           Last updated: {player.updated_at?.getMonth()}/
