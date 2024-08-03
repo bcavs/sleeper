@@ -110,7 +110,7 @@ const PlayerDialogCard = ({ player }: { player: player }) => {
           {player.first_name} {player.last_name}
         </h3>
         <p className="text-sm font-semibold leading-6 ">{player.position}</p>
-        <p className="text-sm font-semibold leading-6 ">{player.team}</p>
+        <p className="text-sm font-semibold leading-6 ">{player.team_abbr}</p>
       </div>
     </div>
   );
