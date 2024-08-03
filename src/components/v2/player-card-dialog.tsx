@@ -14,9 +14,9 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
   const { mutate: syncPlayerData } =
     api.players.syncPlayerFantasyStatsById.useMutation({
       onSuccess: () => {
-        console.log("🌟 Player data synced");
-        refetch();
         setIsStale(false);
+        console.log("🌟 Player data synced.");
+        refetch();
       },
     });
 
@@ -50,18 +50,18 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     try {
       stats = JSON.parse(player.fantasy_stats) as PlayerFantasyStatsBody;
     } catch (error) {
-      console.error("Failed to parse fantasy_stats:", error);
+      // console.error("Failed to parse fantasy_stats:", error);
       if (!isStale) setIsStale(true);
     }
   } else {
     // If fantasy_stats is not a string, log an error
-    console.error("fantasy_stats is not a valid string");
+    // console.error("fantasy_stats is not a valid string");
     if (!isStale) setIsStale(true);
   }
 
   // Verify that the parsed stats object is not null and is a valid object
   if (!stats || typeof stats !== "object") {
-    console.error("Parsed stats is not a valid object");
+    // console.error("Parsed stats is not a valid object");
     if (!isStale) setIsStale(true);
   }
 
