@@ -35,7 +35,6 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     if (days > 2) {
       console.log("Warning: Player data is more than 2 days old.");
       if (!isStale) setIsStale(true);
-      // TODO: Fetch the data from the RapidAPI endpoint then update the player data in Supabase
     }
   }
 
