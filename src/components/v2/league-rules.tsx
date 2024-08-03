@@ -71,7 +71,7 @@ const teamsData = [
 ];
 
 const LeagueRules = () => (
-  <div className="container text-white">
+  <div className="mt-24 self-start text-white">
     <p className="mb-4 text-[28px] font-light">General Rules:</p>
 
     <div className="flex flex-col items-start gap-10">
