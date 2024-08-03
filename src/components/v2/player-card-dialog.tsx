@@ -6,6 +6,7 @@ import { api } from ":)/utils/api";
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
 import FantasyStatsDisplay from "./fantasy-stats-display";
+import { PlayerFantasyStatsBody } from ":)/server/types";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   const [isStale, setIsStale] = useState(false);
@@ -14,10 +15,12 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     api.players.syncPlayerFantasyStatsById.useMutation({
       onSuccess: () => {
         console.log("🌟 Player data synced");
+        refetch();
+        setIsStale(false);
       },
     });
 
-  const { data: playerData } = api.players.getPlayerById.useQuery({
+  const { data: playerData, refetch } = api.players.getPlayerById.useQuery({
     player_id: player.player_id,
   });
 
@@ -37,6 +40,28 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     }
   } else {
     console.log("Warning: Player data is more than 2 days old.");
+    if (!isStale) setIsStale(true);
+  }
+
+  let stats: PlayerFantasyStatsBody | null = null;
+
+  // Check if fantasy_stats is a string and try to parse it
+  if (typeof player.fantasy_stats === "string") {
+    try {
+      stats = JSON.parse(player.fantasy_stats) as PlayerFantasyStatsBody;
+    } catch (error) {
+      console.error("Failed to parse fantasy_stats:", error);
+      if (!isStale) setIsStale(true);
+    }
+  } else {
+    // If fantasy_stats is not a string, log an error
+    console.error("fantasy_stats is not a valid string");
+    if (!isStale) setIsStale(true);
+  }
+
+  // Verify that the parsed stats object is not null and is a valid object
+  if (!stats || typeof stats !== "object") {
+    console.error("Parsed stats is not a valid object");
     if (!isStale) setIsStale(true);
   }
 
