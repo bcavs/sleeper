@@ -12,10 +12,7 @@ interface RosterPageProps {
   leagueId: string;
 }
 
-const RosterPage: NextPage<{ id: string; leagueId: string }> = ({
-  id,
-  leagueId,
-}) => {
+const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
   const {
     data: userData,
     isLoading: isLoadingUserData,

@@ -4,6 +4,7 @@ import LeaderboardRosterCard, {
 import type { LeagueUserData } from ":)/server/types";
 import { api } from ":)/utils/api";
 import { Skeleton } from ":)/components/ui/skeleton";
+import Link from "next/link";
 
 export default function LeagueDisplay(props: { leagueId: string }) {
   const { leagueId } = props;
@@ -63,9 +64,11 @@ export default function LeagueDisplay(props: { leagueId: string }) {
   return (
     <>
       <section className="flex w-full flex-col">
-        <h3 className="pb-2 font-bold text-indigo-400 md:pb-6 md:text-2xl">
-          {leagueData.name}
-        </h3>
+        <Link href={`/${leagueData.league_id}`}>
+          <h3 className="pb-2 font-bold text-indigo-400 md:pb-6 md:text-2xl">
+            {leagueData.name}
+          </h3>
+        </Link>
         <ul className="flex w-full flex-col md:gap-4">
           {sortedRosters.map((roster) => {
             return (
