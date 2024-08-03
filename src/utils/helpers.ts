@@ -104,11 +104,17 @@ export const fetchPlayerFantasyStats = async ({
     },
   };
 
-  try {
-    const response = await fetch(url, options);
-    const result = await response.text();
-    console.log(result);
-  } catch (error) {
-    console.error(error);
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch user");
   }
+
+  const responseBody: unknown = await res.json();
+
+  if (typeof responseBody !== "object") {
+    throw new Error("Unexpected response format");
+  }
+
+  return responseBody;
 };

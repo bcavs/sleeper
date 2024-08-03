@@ -2,9 +2,25 @@ import { Player } from "@prisma/client";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from ":)/utils";
+import { api } from ":)/utils/api";
+import { useState } from "react";
+import { RefreshCw } from "lucide-react";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
+  const [isStale, setIsStale] = useState(false);
   console.log(player);
+
+  const { data, isLoading, isError, refetch } =
+    api.players.getPlayerFantasyStatsById.useQuery(
+      {
+        espn_id: player.espn_id ?? 0,
+      },
+      {
+        enabled: false,
+      }
+    );
+
+  console.log("data: ", data);
 
   //if the player.updated_at is more than 2 days, show a warning
   if (player.updated_at) {
@@ -12,12 +28,14 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
     const today = new Date();
 
     //!!: DEBUG SET DATE 3 DAYS IN FUTURE
-    //  today.setDate(today.getDate() + 1);
+    today.setDate(today.getDate() + 3);
 
     const diff = today.getTime() - updated.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
     if (days > 2) {
       console.log("Warning: Player data is more than 2 days old.");
+      if (!isStale) setIsStale(true);
+      // TODO: Fetch the data from the RapidAPI endpoint then update the player data in Supabase
     }
   }
 
@@ -65,10 +83,23 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
           <p className="text-sm font-semibold leading-6 ">{player.team_abbr}</p>
         </div>
       </div>
-      <p className="absolute bottom-1 right-2 text-xs text-slate-300">
-        Last updated: {player.updated_at?.getMonth()}/
-        {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
-      </p>
+      <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
+        <p>
+          Last updated: {player.updated_at?.getMonth()}/
+          {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
+        </p>
+        <div className="h-1 w-1 rounded-full bg-slate-300" />
+        {isStale && (
+          <button
+            onClick={() => {
+              refetch();
+            }}
+            className="flex items-center gap-1 text-xs text-red-500"
+          >
+            Refresh <RefreshCw size={12} />
+          </button>
+        )}
+      </div>
     </div>
   );
 };

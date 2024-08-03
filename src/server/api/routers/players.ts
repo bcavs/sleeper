@@ -24,7 +24,7 @@ export const playersRouter = createTRPCRouter({
       }
     }),
 
-  getPlayerDetailsById: publicProcedure
+  getPlayerFantasyStatsById: publicProcedure
     .input(
       z.object({
         espn_id: z.number(),
@@ -32,10 +32,10 @@ export const playersRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       try {
-        const league = await fetchPlayerFantasyStats({
+        const playerFantasyStats = await fetchPlayerFantasyStats({
           playerId: input.espn_id,
         });
-        return league;
+        return playerFantasyStats;
       } catch (error) {
         console.error(error);
         throw error;
