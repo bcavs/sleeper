@@ -49,7 +49,6 @@ model player {
   stats_id               Int?
   status                 String?
   swish_id               Int?
-  team                   String?
   weight                 String?
   yahoo_id               Int?
   years_exp              Int?
@@ -57,13 +56,14 @@ model player {
   team_abbr              String?
   updated_at             DateTime? @db.Timestamptz(6)
   player_id              String    @id @unique
+  team                   team?     @relation(fields: [team_abbr], references: [abbreviation])
 }
 
 model team {
   id               String
   uid              String
   slug             String
-  abbreviation     String  @id
+  abbreviation     String   @id
   displayName      String
   shortDisplayName String
   name             String
@@ -75,6 +75,7 @@ model team {
   isAllStar        Boolean
   logos            logo[]
   links            link[]
+  players          player[]
 }
 
 model logo {
