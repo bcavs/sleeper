@@ -68,6 +68,7 @@ export const playersRouter = createTRPCRouter({
           },
           data: {
             fantasy_stats: JSON.stringify(playerFantasyStats.body),
+            updated_at: new Date(),
           },
         });
 

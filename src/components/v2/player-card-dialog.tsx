@@ -8,16 +8,15 @@ import { RefreshCw } from "lucide-react";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   const [isStale, setIsStale] = useState(false);
-  console.log(player);
 
   const { mutate: syncPlayerData } =
     api.players.syncPlayerFantasyStatsById.useMutation({
-      onSuccess: (data) => {
-        console.log("Data: ", data);
+      onSuccess: () => {
+        console.log("🌟 Player data synced");
       },
     });
 
-  //if the player.updated_at is more than 2 days, show a warning
+  //if the player.updated_at is more than 2 days, add refresh button
   if (player.updated_at) {
     const updated = new Date(player.updated_at);
     const today = new Date();
@@ -31,6 +30,9 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
       console.log("Warning: Player data is more than 2 days old.");
       if (!isStale) setIsStale(true);
     }
+  } else {
+    console.log("Warning: Player data is more than 2 days old.");
+    if (!isStale) setIsStale(true);
   }
 
   return (
