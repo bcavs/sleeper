@@ -7,6 +7,7 @@ import { useState } from "react";
 import { RefreshCw } from "lucide-react";
 import FantasyStatsDisplay from "./fantasy-stats-display";
 import { PlayerFantasyStatsBody } from ":)/server/types";
+import { toast } from "sonner";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   const [isStale, setIsStale] = useState(false);
@@ -17,6 +18,9 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
         setIsStale(false);
         console.log("🌟 Player data synced.");
         await refetch();
+      },
+      onError: (error) => {
+        console.error("Failed to sync player data:", error);
       },
     });
 
@@ -125,6 +129,10 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
 
       {/* Last updated info */}
       <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
+        <p>{player.player_id ? player.player_id : "N/A"}</p>
+        <div className="h-1 w-1 rounded-full bg-slate-300" />
+        <p>{player.espn_id ? player.espn_id : "N/A"}</p>
+        <div className="h-1 w-1 rounded-full bg-slate-300" />
         <p>
           Last updated: {player.updated_at?.getMonth()}/
           {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
@@ -134,7 +142,12 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
             <div className="h-1 w-1 rounded-full bg-slate-300" />
             <button
               onClick={() => {
-                syncPlayerData({ espn_id: player.espn_id ?? 0 });
+                if (!player.espn_id) {
+                  toast.error("Player ESPN ID is missing.");
+                  return;
+                }
+
+                syncPlayerData({ espn_id: player.espn_id });
               }}
               className="flex items-center gap-1 text-xs text-red-500"
             >
