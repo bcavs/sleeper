@@ -175,24 +175,6 @@ export default function FantasyStatsDisplay({
           {playerData.updated_at?.getDate()}/
           {playerData.updated_at?.getFullYear()}
         </p>
-        {isStale && (
-          <>
-            <div className="h-1 w-1 rounded-full bg-slate-300" />
-            <button
-              onClick={() => {
-                if (!playerData.espn_id) {
-                  toast.error("Player ESPN ID is missing.");
-                  return;
-                }
-
-                syncPlayerData({ espn_id: playerData.espn_id });
-              }}
-              className="flex items-center gap-1 text-xs text-red-500"
-            >
-              Refresh <RefreshCw size={12} />
-            </button>
-          </>
-        )}
       </div>
     </>
   );
