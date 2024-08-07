@@ -19,9 +19,11 @@ const chartConfig = {
 export default function FantasyStatsGraph({
   stats,
   teamAbbr,
+  yAxisDomain = [0, 55], // Default domain for y-axis
 }: {
   stats: [string, PlayerGameStats][];
   teamAbbr: string;
+  yAxisDomain?: [number, number]; // Accept domain as prop
 }) {
   const chartData = stats.map((game) => {
     const gameId = game[0];
@@ -53,7 +55,7 @@ export default function FantasyStatsGraph({
     };
   });
 
-  // sort by ascending date
+  // Sort by ascending date
   chartData.sort((a, b) => {
     if (a.date < b.date) {
       return -1;
@@ -72,10 +74,12 @@ export default function FantasyStatsGraph({
         <LineChart
           accessibilityLayer
           data={chartData}
-          margin={{
-            left: 12,
-            right: 12,
-          }}
+          margin={
+            {
+              // left: 12,
+              // right: 12,
+            }
+          }
         >
           <CartesianGrid vertical={true} />
           <XAxis
@@ -85,6 +89,7 @@ export default function FantasyStatsGraph({
             tickMargin={8}
             tickFormatter={(_, index) => index.toString()}
           />
+          <YAxis domain={yAxisDomain} /> {/* Add YAxis with fixed domain */}
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Line
             dataKey="fantasyPoints"
