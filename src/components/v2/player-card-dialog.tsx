@@ -6,7 +6,7 @@ import FantasyStatsDisplay from "./fantasy-stats-display";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   return (
-    <div className="flex h-full flex-col items-center gap-4 overflow-hidden">
+    <div className="flex h-full  flex-col items-center gap-4 overflow-hidden">
       <div className="flex w-full items-center">
         {player.position === "DEF" ? (
           <Image
