@@ -1,19 +1,13 @@
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from ":)/components/ui/card";
+import { CardDescription, CardTitle } from ":)/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from ":)/components/ui/chart";
-import { PlayerFantasyStatsBody, PlayerGameStats } from ":)/server/types";
+import { PlayerGameStats } from ":)/server/types";
 
 const chartConfig = {
   fantasyPoints: {
@@ -21,8 +15,6 @@ const chartConfig = {
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
-
-const numberOfGamesToShow = 6;
 
 export default function FantasyStatsGraph({
   stats,
@@ -55,11 +47,11 @@ export default function FantasyStatsGraph({
   return (
     <>
       <CardTitle>Fantasy Points</CardTitle>
-      <CardDescription>Last {numberOfGamesToShow} games</CardDescription>
+      <CardDescription>Last season</CardDescription>
       <ChartContainer config={chartConfig} className="my-6">
         <LineChart
           accessibilityLayer
-          data={chartData.splice(0, numberOfGamesToShow)}
+          data={chartData}
           margin={{
             left: 12,
             right: 12,
@@ -71,6 +63,7 @@ export default function FantasyStatsGraph({
             tickLine={true}
             axisLine={true}
             tickMargin={8}
+            tickFormatter={(_, index) => index.toString()}
           />
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Line

@@ -109,7 +109,6 @@ export default function FantasyStatsDisplay({
     );
   }
 
-  console.log("Fantasy stats:", JSON.parse(playerData.fantasy_stats));
   return (
     <>
       <div className="h-full max-h-[100%] w-full">
