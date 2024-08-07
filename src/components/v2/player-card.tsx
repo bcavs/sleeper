@@ -5,10 +5,13 @@ import Image from "next/image";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from ":)/components/ui/dialog";
 import PlayerCardDialog from ":)/components/v2/player-card-dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function PlayerCard({ player }: { player: Player }) {
   return (
@@ -75,8 +78,16 @@ export default function PlayerCard({ player }: { player: Player }) {
           </div>
         </li>
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
-        <DialogTitle className="hidden">{player.full_name}</DialogTitle>
+      <DialogContent className="max-w-lg overflow-scroll">
+        <DialogHeader>
+          {/* This VisuallyHidden section is needed for the Dialog to work properly */}
+          <VisuallyHidden.Root>
+            <DialogTitle>{player.full_name}</DialogTitle>
+            <DialogDescription>
+              {player.full_name}'s Statsheet
+            </DialogDescription>
+          </VisuallyHidden.Root>
+        </DialogHeader>
         <PlayerCardDialog player={player} />
       </DialogContent>
     </Dialog>

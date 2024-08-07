@@ -2,75 +2,11 @@ import { Player } from "@prisma/client";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from ":)/utils";
-import { api } from ":)/utils/api";
-import { useState } from "react";
-import { RefreshCw } from "lucide-react";
 import FantasyStatsDisplay from "./fantasy-stats-display";
-import { PlayerFantasyStatsBody } from ":)/server/types";
-import { toast } from "sonner";
 
 const PlayerCardDialog = ({ player }: { player: Player }) => {
-  const [isStale, setIsStale] = useState(false);
-
-  const { mutate: syncPlayerData } =
-    api.players.syncPlayerFantasyStatsById.useMutation({
-      onSuccess: async () => {
-        setIsStale(false);
-        console.log("🌟 Player data synced.");
-        await refetch();
-      },
-      onError: (error) => {
-        console.error("Failed to sync player data:", error);
-      },
-    });
-
-  const { data: playerData, refetch } = api.players.getPlayerById.useQuery({
-    player_id: player.player_id,
-  });
-
-  //if the player.updated_at is more than 2 days, add refresh button
-  if (player.updated_at) {
-    const updated = new Date(player.updated_at);
-    const today = new Date();
-
-    //!!: DEBUG SET DATE 3 DAYS IN FUTURE
-    // today.setDate(today.getDate() + 3);
-
-    const diff = today.getTime() - updated.getTime();
-    const days = diff / (1000 * 60 * 60 * 24);
-    if (days > 2) {
-      console.log("Warning: Player data is more than 2 days old.");
-      if (!isStale) setIsStale(true);
-    }
-  } else {
-    console.log("Warning: Player data is more than 2 days old.");
-    if (!isStale) setIsStale(true);
-  }
-
-  let stats: PlayerFantasyStatsBody | null = null;
-
-  // Check if fantasy_stats is a string and try to parse it
-  if (typeof player.fantasy_stats === "string") {
-    try {
-      stats = JSON.parse(player.fantasy_stats) as PlayerFantasyStatsBody;
-    } catch (error) {
-      // console.error("Failed to parse fantasy_stats:", error);
-      if (!isStale) setIsStale(true);
-    }
-  } else {
-    // If fantasy_stats is not a string, log an error
-    // console.error("fantasy_stats is not a valid string");
-    if (!isStale) setIsStale(true);
-  }
-
-  // Verify that the parsed stats object is not null and is a valid object
-  if (!stats || typeof stats !== "object") {
-    // console.error("Parsed stats is not a valid object");
-    if (!isStale) setIsStale(true);
-  }
-
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex h-full flex-col items-center gap-4 overflow-hidden">
       <div className="flex w-full items-center">
         {player.position === "DEF" ? (
           <Image
@@ -120,41 +56,10 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
         </div>
       </div>
 
-      <div className="relative grid h-full w-full grid-cols-1">
+      <div className="relative grid h-full w-full grid-cols-1 overflow-hidden">
         <p>Fantasy Stats</p>
-        {playerData?.fantasy_stats && (
-          <FantasyStatsDisplay fantasy_stats={playerData?.fantasy_stats} />
-        )}
-      </div>
 
-      {/* Last updated info */}
-      <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
-        <p>{player.player_id ? player.player_id : "N/A"}</p>
-        <div className="h-1 w-1 rounded-full bg-slate-300" />
-        <p>{player.espn_id ? player.espn_id : "N/A"}</p>
-        <div className="h-1 w-1 rounded-full bg-slate-300" />
-        <p>
-          Last updated: {player.updated_at?.getMonth()}/
-          {player.updated_at?.getDate()}/{player.updated_at?.getFullYear()}
-        </p>
-        {isStale && (
-          <>
-            <div className="h-1 w-1 rounded-full bg-slate-300" />
-            <button
-              onClick={() => {
-                if (!player.espn_id) {
-                  toast.error("Player ESPN ID is missing.");
-                  return;
-                }
-
-                syncPlayerData({ espn_id: player.espn_id });
-              }}
-              className="flex items-center gap-1 text-xs text-red-500"
-            >
-              Refresh <RefreshCw size={12} />
-            </button>
-          </>
-        )}
+        <FantasyStatsDisplay player_id={player.player_id} />
       </div>
     </div>
   );
