@@ -84,7 +84,7 @@ export default function PlayerCard({ player }: { player: Player }) {
           <VisuallyHidden.Root>
             <DialogTitle>{player.full_name}</DialogTitle>
             <DialogDescription>
-              {player.full_name}'s Statsheet
+              {player.full_name}&apos;s Statsheet
             </DialogDescription>
           </VisuallyHidden.Root>
         </DialogHeader>

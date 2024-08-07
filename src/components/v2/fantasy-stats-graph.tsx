@@ -13,7 +13,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from ":)/components/ui/chart";
-import { PlayerFantasyStatsBody } from ":)/server/types";
+import { PlayerFantasyStatsBody, PlayerGameStats } from ":)/server/types";
 
 const chartConfig = {
   fantasyPoints: {
@@ -28,7 +28,7 @@ export default function FantasyStatsGraph({
   stats,
   teamAbbr,
 }: {
-  stats: [string, PlayerFantasyStatsBody][];
+  stats: [string, PlayerGameStats][];
   teamAbbr: string;
 }) {
   const chartData = stats.map((game) => {
@@ -48,7 +48,7 @@ export default function FantasyStatsGraph({
 
     return {
       opponent,
-      fantasyPoints: parseFloat(`${gameStats.fantasyPoints}`),
+      fantasyPoints: parseFloat(gameStats.fantasyPoints),
     };
   });
 
@@ -71,7 +71,6 @@ export default function FantasyStatsGraph({
             tickLine={true}
             axisLine={true}
             tickMargin={8}
-            tickFormatter={(value) => value.slice(0, 3)}
           />
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Line

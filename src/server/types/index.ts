@@ -191,7 +191,7 @@ interface FantasyPoints {
   halfPPR: string;
 }
 
-interface PlayerGameStats {
+export interface PlayerGameStats {
   teamAbv: string;
   longName: string;
   Rushing: RushingStats;

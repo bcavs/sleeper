@@ -1,4 +1,8 @@
-import { PlayerFantasyStatsBody } from ":)/server/types";
+import {
+  PlayerFantasyStatsBody,
+  PlayerFantasyStatsResponse,
+  PlayerGameStats,
+} from ":)/server/types";
 import { api } from ":)/utils/api";
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
@@ -17,7 +21,7 @@ export default function FantasyStatsDisplay({
       onSuccess: async () => {
         setIsStale(false);
         console.log("🌟 Player data synced.");
-        refetch();
+        await refetch();
       },
       onError: (error) => {
         console.log("Failed to sync player data:", error);
@@ -64,12 +68,17 @@ export default function FantasyStatsDisplay({
     return <p>No fantasy stats found.</p>;
   }
 
-  let statsArray: [string, PlayerFantasyStatsBody][] = [];
+  let statsArray: [string, PlayerGameStats][] = [];
 
   // Check if fantasy_stats is a string and try to parse it
   if (typeof playerData?.fantasy_stats === "string") {
     try {
-      statsArray = Object.entries(JSON.parse(playerData.fantasy_stats));
+      const parsedStats = JSON.parse(playerData.fantasy_stats) as Record<
+        string,
+        PlayerGameStats
+      >;
+
+      statsArray = Object.entries(parsedStats);
     } catch (error) {
       console.log("Failed to parse fantasy_stats:", error);
       return;
@@ -106,7 +115,7 @@ export default function FantasyStatsDisplay({
       <div className="h-full max-h-[100%] w-full">
         <FantasyStatsGraph
           stats={statsArray}
-          teamAbbr={playerData.team_abbr || ""}
+          teamAbbr={playerData.team_abbr ?? ""}
         />
         <ul>
           {statsArray.map((game) => {
@@ -145,7 +154,14 @@ export default function FantasyStatsDisplay({
                 </div>
                 <ul>
                   <li className="max-w-[250px]">
-                    <p>Fantasy Points: {`${gameStats.fantasyPoints}`}</p>
+                    <p>
+                      Fantasy Points:{" "}
+                      {`${
+                        typeof gameStats?.fantasyPoints === "string"
+                          ? gameStats?.fantasyPoints
+                          : "0"
+                      }`}
+                    </p>
                   </li>
                 </ul>
               </li>
