@@ -1,4 +1,4 @@
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import { CardDescription, CardTitle } from ":)/components/ui/card";
 import {
@@ -31,17 +31,37 @@ export default function FantasyStatsGraph({
     const teams = matchup?.split("@");
     const opponent = teams?.find((team) => team !== teamAbbr);
 
+    const date = gameId.split("_")[0];
+    const year = date?.slice(0, 4);
+    const month = date?.slice(4, 6);
+    const day = date?.slice(6, 8);
+
+    const formattedDate = `${year}-${month}-${day}`;
+
     if (!gameStats) {
       return {
         opponent,
+        date: formattedDate,
         fantasyPoints: 0,
       };
     }
 
     return {
       opponent,
+      date: formattedDate,
       fantasyPoints: parseFloat(gameStats.fantasyPoints),
     };
+  });
+
+  // sort by ascending date
+  chartData.sort((a, b) => {
+    if (a.date < b.date) {
+      return -1;
+    }
+    if (a.date > b.date) {
+      return 1;
+    }
+    return 0;
   });
 
   return (
@@ -68,7 +88,7 @@ export default function FantasyStatsGraph({
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Line
             dataKey="fantasyPoints"
-            type="natural"
+            type="linear"
             stroke="var(--color-fantasyPoints)"
             strokeWidth={2}
             dot={true}

@@ -1,8 +1,4 @@
-import {
-  PlayerFantasyStatsBody,
-  PlayerFantasyStatsResponse,
-  PlayerGameStats,
-} from ":)/server/types";
+import { PlayerGameStats } from ":)/server/types";
 import { api } from ":)/utils/api";
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
