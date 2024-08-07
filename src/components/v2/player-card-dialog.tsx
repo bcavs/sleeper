@@ -57,8 +57,6 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
       </div>
 
       <div className="relative grid h-full w-full grid-cols-1 overflow-hidden">
-        <p>Fantasy Stats</p>
-
         <FantasyStatsDisplay player_id={player.player_id} />
       </div>
     </div>

@@ -104,7 +104,10 @@ export default function FantasyStatsDisplay({
   return (
     <>
       <div className="h-full max-h-[100%] w-full">
-        <FantasyStatsGraph stats={statsArray} />
+        <FantasyStatsGraph
+          stats={statsArray}
+          teamAbbr={playerData.team_abbr || ""}
+        />
         <ul>
           {statsArray.map((game) => {
             const gameId = game[0];
