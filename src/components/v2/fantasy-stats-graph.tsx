@@ -70,36 +70,38 @@ export default function FantasyStatsGraph({
     <>
       <CardTitle>Fantasy Points</CardTitle>
       <CardDescription>Last season</CardDescription>
-      <ChartContainer config={chartConfig} className="my-6">
-        <LineChart
-          accessibilityLayer
-          data={chartData}
-          margin={
-            {
-              // left: 12,
-              // right: 12,
+      <div className="overflow-x-scroll">
+        <ChartContainer config={chartConfig} className="my-6 w-[1000px]">
+          <LineChart
+            accessibilityLayer
+            data={chartData}
+            margin={
+              {
+                // left: 12,
+                // right: 12,
+              }
             }
-          }
-        >
-          <CartesianGrid vertical={true} />
-          <XAxis
-            dataKey="opponent"
-            tickLine={true}
-            axisLine={true}
-            tickMargin={8}
-            tickFormatter={(_, index) => index.toString()}
-          />
-          <YAxis domain={yAxisDomain} /> {/* Add YAxis with fixed domain */}
-          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-          <Line
-            dataKey="fantasyPoints"
-            type="linear"
-            stroke="var(--color-fantasyPoints)"
-            strokeWidth={2}
-            dot={true}
-          />
-        </LineChart>
-      </ChartContainer>
+          >
+            <CartesianGrid vertical={true} />
+            <XAxis
+              dataKey="opponent"
+              tickLine={true}
+              axisLine={true}
+              tickMargin={8}
+              // tickFormatter={(_, index) => index.toString()}
+            />
+            <YAxis domain={yAxisDomain} /> {/* Add YAxis with fixed domain */}
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Line
+              dataKey="fantasyPoints"
+              type="linear"
+              stroke="var(--color-fantasyPoints)"
+              strokeWidth={2}
+              dot={true}
+            />
+          </LineChart>
+        </ChartContainer>
+      </div>
     </>
   );
 }
