@@ -68,19 +68,22 @@ export default function FantasyStatsGraph({
 
   return (
     <>
-      <CardTitle>Fantasy Points</CardTitle>
-      <CardDescription>Last season</CardDescription>
+      <div className="px-4">
+        <CardTitle>Fantasy Points</CardTitle>
+        <CardDescription>Last season</CardDescription>
+      </div>
       <div className="overflow-x-scroll">
-        <ChartContainer config={chartConfig} className="my-6 w-[1000px]">
+        <ChartContainer
+          config={chartConfig}
+          className="my-6 h-[250px] w-[1000px]"
+        >
           <LineChart
             accessibilityLayer
             data={chartData}
-            margin={
-              {
-                // left: 12,
-                // right: 12,
-              }
-            }
+            margin={{
+              top: 8,
+              right: 12,
+            }}
           >
             <CartesianGrid vertical={true} />
             <XAxis

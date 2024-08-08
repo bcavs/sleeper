@@ -7,7 +7,7 @@ import FantasyStatsDisplay from "./fantasy-stats-display";
 const PlayerCardDialog = ({ player }: { player: Player }) => {
   return (
     <div className="flex h-full  flex-col items-center gap-4 overflow-hidden">
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center p-4">
         {player.position === "DEF" ? (
           <Image
             src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}

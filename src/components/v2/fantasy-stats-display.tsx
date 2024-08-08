@@ -112,7 +112,7 @@ export default function FantasyStatsDisplay({
           stats={statsArray}
           teamAbbr={playerData.team_abbr ?? ""}
         />
-        <ul>
+        <ul className="p-4">
           {statsArray.map((game) => {
             const gameId = game[0];
             const gameStats = game[1];
@@ -140,7 +140,7 @@ export default function FantasyStatsDisplay({
             };
 
             return (
-              <li key={gameId} className="my-5 divide-y-2">
+              <li key={gameId} className="my-5 divide-y-2 ">
                 <div className="flex items-center gap-3">
                   <h3 className="font-bold">{`${getGameMatchup(gameId)}`}</h3>
                   <p className="text-xs text-slate-500">{`${getGameDate(

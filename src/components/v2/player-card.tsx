@@ -78,7 +78,7 @@ export default function PlayerCard({ player }: { player: Player }) {
           </div>
         </li>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl overflow-scroll">
+      <DialogContent className="max-w-3xl overflow-scroll p-0">
         <DialogHeader>
           {/* This VisuallyHidden section is needed for the Dialog to work properly */}
           <VisuallyHidden.Root>
