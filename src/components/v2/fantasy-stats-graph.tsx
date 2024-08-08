@@ -19,12 +19,11 @@ const chartConfig = {
 export default function FantasyStatsGraph({
   stats,
   teamAbbr,
-  yAxisDomain = [0, 55], // Default domain for y-axis
 }: {
   stats: [string, PlayerGameStats][];
   teamAbbr: string;
-  yAxisDomain?: [number, number]; // Accept domain as prop
 }) {
+  const yAxisDomain = [0, 55]; // Default domain for y-axis
   const chartData = stats.map((game) => {
     const gameId = game[0];
     const gameStats = game[1];
