@@ -95,10 +95,32 @@ export const fetchPlayerFantasyStats = async ({
 }: {
   playerEspnId: number;
 }) => {
-  // TODO: use league settings to calculate fantasy points params
+  const scoringSettings = {
+    twoPointConversions: "2",
+    passYards: ".04",
+    passTD: "4",
+    passInterceptions: "-1",
+    pointsPerReception: "1",
+    carries: ".2",
+    rushYards: ".1",
+    rushTD: "6",
+    fumbles: "-2",
+    receivingYards: ".1",
+    receivingTD: "6",
+    targets: "0",
+    defTD: "6",
+    xpMade: "1",
+    xpMissed: "-1",
+    fgMade: "3",
+    fgMissed: "-1",
+  };
+
+  const scoringSettingsQueryString = Object.entries(scoringSettings)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
 
   const season = "2023";
-  const url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=${playerEspnId}&season=${season}&fantasyPoints=true&twoPointConversions=2&passYards=.04&passTD=4&passInterceptions=-2&pointsPerReception=1&carries=.2&rushYards=.1&rushTD=6&fumbles=-2&receivingYards=.1&receivingTD=6&targets=0&defTD=6&xpMade=1&xpMissed=-1&fgMade=3&fgMissed=-3`;
+  const url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=${playerEspnId}&season=${season}&fantasyPoints=true&${scoringSettingsQueryString}`;
   const options = {
     method: "GET",
     headers: {
