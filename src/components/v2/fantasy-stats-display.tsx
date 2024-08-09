@@ -93,7 +93,10 @@ export default function FantasyStatsDisplay({
                   return;
                 }
 
-                syncPlayerData({ espn_id: playerData.espn_id });
+                syncPlayerData({
+                  espn_id: playerData.espn_id,
+                  player_id: playerData.player_id,
+                });
               }}
               className="flex items-center gap-1 text-xs text-red-500"
             >
