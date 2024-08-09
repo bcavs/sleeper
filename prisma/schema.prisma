@@ -102,10 +102,10 @@ model Link {
 }
 
 model Game {
-  game_id        String           @id @unique
+  game_id        String           @id
   home_team_abbr String
   away_team_abbr String
-  game_date      DateTime
+  game_date      String
   PlayerStatline PlayerStatline[]
 }
 

@@ -84,26 +84,29 @@ export const playersRouter = createTRPCRouter({
           };
         });
 
-        await ctx.prisma.game.createMany({
-          data: structuredGameData,
-          skipDuplicates: true,
-        });
-
         const structuredPlayerStatlineData = gamesData.map(
           ([gameId, stats]) => {
             return {
               player_id: input.player_id,
-              game_id: gameId,
-              stats: JSON.stringify(stats),
               fantasy_pts: parseFloat(stats.fantasyPoints),
+              stats: JSON.stringify(stats),
             };
           }
         );
 
-        console.log(
-          "structuredPlayerStatlineData",
-          structuredPlayerStatlineData
-        );
+        structuredGameData.forEach(async (game, index) => {
+          await ctx.prisma.game.create({
+            data: {
+              game_id: game.game_id,
+              game_date: game.game_date,
+              away_team_abbr: game.away_team_abbr,
+              home_team_abbr: game.home_team_abbr,
+              PlayerStatline: {
+                create: structuredPlayerStatlineData[index],
+              },
+            },
+          });
+        });
 
         await ctx.prisma.player.update({
           where: {
