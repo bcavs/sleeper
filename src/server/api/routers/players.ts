@@ -84,29 +84,30 @@ export const playersRouter = createTRPCRouter({
           };
         });
 
-        const structuredPlayerStatlineData = gamesData.map(
-          ([gameId, stats]) => {
-            return {
-              player_id: input.player_id,
-              fantasy_pts: parseFloat(stats.fantasyPoints),
-              stats: JSON.stringify(stats),
-            };
-          }
-        );
-
-        structuredGameData.forEach(async (game, index) => {
-          await ctx.prisma.game.create({
-            data: {
-              game_id: game.game_id,
-              game_date: game.game_date,
-              away_team_abbr: game.away_team_abbr,
-              home_team_abbr: game.home_team_abbr,
-              PlayerStatline: {
-                create: structuredPlayerStatlineData[index],
-              },
-            },
-          });
+        const structuredPlayerStatlineData = gamesData.map(([_, stats]) => {
+          // TODO: Pull out all the stats we want to store in the database from the stats JSON
+          return {
+            player_id: input.player_id,
+            fantasy_pts: parseFloat(stats.fantasyPoints),
+            stats: JSON.stringify(stats),
+          };
         });
+
+        await Promise.all(
+          structuredGameData.map((game, index) =>
+            ctx.prisma.game.create({
+              data: {
+                game_id: game.game_id,
+                game_date: game.game_date,
+                away_team_abbr: game.away_team_abbr,
+                home_team_abbr: game.home_team_abbr,
+                PlayerStatline: {
+                  create: structuredPlayerStatlineData[index],
+                },
+              },
+            })
+          )
+        );
 
         await ctx.prisma.player.update({
           where: {
