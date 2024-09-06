@@ -33,7 +33,7 @@ export const playersRouter = createTRPCRouter({
     .query(async ({ input }) => {
       try {
         const playerFantasyStats = await fetchPlayerFantasyStats({
-          playerId: input.espn_id,
+          playerEspnId: input.espn_id,
         });
         return playerFantasyStats;
       } catch (error) {
@@ -46,12 +46,13 @@ export const playersRouter = createTRPCRouter({
     .input(
       z.object({
         espn_id: z.number(),
+        player_id: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       try {
         const playerFantasyStats = await fetchPlayerFantasyStats({
-          playerId: input.espn_id,
+          playerEspnId: input.espn_id,
         });
 
         if (!playerFantasyStats) {
@@ -61,6 +62,52 @@ export const playersRouter = createTRPCRouter({
         if (playerFantasyStats.statusCode !== 200) {
           throw new Error("Failed to fetch player fantasy stats");
         }
+
+        const gamesData = Object.entries(playerFantasyStats.body);
+
+        if (!gamesData) {
+          throw new Error("Failed to fetch player fantasy stats");
+        }
+
+        const structuredGameData = gamesData.map(([gameId, _]) => {
+          // expected gameId format: "20241012_CHI@GB"
+          const game_date = gameId.split("_")[0] ?? "";
+          const teams = gameId.split("_")[1];
+          const away_team_abbr = teams?.split("@")[0] ?? "";
+          const home_team_abbr = teams?.split("@")[1] ?? "";
+
+          return {
+            game_id: gameId,
+            game_date,
+            away_team_abbr,
+            home_team_abbr,
+          };
+        });
+
+        const structuredPlayerStatlineData = gamesData.map(([_, stats]) => {
+          // TODO: Pull out all the stats we want to store in the database from the stats JSON
+          return {
+            player_id: input.player_id,
+            fantasy_pts: parseFloat(stats.fantasyPoints),
+            stats: JSON.stringify(stats),
+          };
+        });
+
+        await Promise.all(
+          structuredGameData.map((game, index) =>
+            ctx.prisma.game.create({
+              data: {
+                game_id: game.game_id,
+                game_date: game.game_date,
+                away_team_abbr: game.away_team_abbr,
+                home_team_abbr: game.home_team_abbr,
+                PlayerStatline: {
+                  create: structuredPlayerStatlineData[index],
+                },
+              },
+            })
+          )
+        );
 
         await ctx.prisma.player.update({
           where: {
@@ -92,6 +139,9 @@ export const playersRouter = createTRPCRouter({
             player_id: {
               in: input.player_ids,
             },
+          },
+          include: {
+            PlayerStatline: true,
           },
         });
 

@@ -204,9 +204,7 @@ export interface PlayerGameStats {
   fantasyPointsDefault: FantasyPoints;
 }
 
-export type PlayerFantasyStatsBody = Record<string, PlayerGameStats>;
-
 export interface PlayerFantasyStatsResponse {
   statusCode: number;
-  body: PlayerFantasyStatsBody;
+  body: Record<string, PlayerGameStats>;
 }

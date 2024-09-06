@@ -17,7 +17,7 @@ model Player {
   college                String?
   depth_chart_order      Int?
   depth_chart_position   String?
-  espn_id                Int?      @unique
+  espn_id                Int?             @unique
   fantasy_data_id        Int?
   fantasy_positions      String?
   first_name             String?
@@ -54,10 +54,11 @@ model Player {
   years_exp              Int?
   news_updated           Int?
   team_abbr              String?
-  updated_at             DateTime? @db.Timestamptz(6)
-  player_id              String    @id @unique
-  team                   Team?     @relation(fields: [team_abbr], references: [abbreviation])
-  fantasy_stats          Json      @default("{}")
+  updated_at             DateTime?        @db.Timestamptz(6)
+  player_id              String           @id @unique
+  team                   Team?            @relation(fields: [team_abbr], references: [abbreviation])
+  fantasy_stats          Json             @default("{}")
+  PlayerStatline         PlayerStatline[]
 }
 
 model Team {
@@ -98,4 +99,22 @@ model Link {
   isHidden   Boolean
   teamId     String
   team       Team    @relation(fields: [teamId], references: [abbreviation])
+}
+
+model Game {
+  game_id        String           @id
+  home_team_abbr String
+  away_team_abbr String
+  game_date      String
+  PlayerStatline PlayerStatline[]
+}
+
+model PlayerStatline {
+  id          String @id @unique @default(cuid())
+  player_id   String
+  game_id     String
+  fantasy_pts Float
+  stats       Json
+  player      Player @relation(fields: [player_id], references: [player_id])
+  game        Game   @relation(fields: [game_id], references: [game_id])
 }
