@@ -140,6 +140,9 @@ export const playersRouter = createTRPCRouter({
               in: input.player_ids,
             },
           },
+          include: {
+            PlayerStatline: true,
+          },
         });
 
         return players;
