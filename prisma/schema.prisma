@@ -54,6 +54,7 @@ model Player {
   years_exp              Int?
   news_updated           Int?
   team_abbr              String?
+  team_changed_at        DateTime?
   updated_at             DateTime?        @db.Timestamptz(6)
   player_id              String           @id @unique
   team                   Team?            @relation(fields: [team_abbr], references: [abbreviation])
