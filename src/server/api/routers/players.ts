@@ -98,7 +98,8 @@ export const playersRouter = createTRPCRouter({
 
         await Promise.all(
           structuredGameData.map((game, index) => {
-            if (!structuredPlayerStatlineData[index]) return;
+            const playerStatlineData = structuredPlayerStatlineData[index];
+            if (!playerStatlineData || !playerStatlineData.id) return;
 
             console.log("Upserting game:", game.game_id, game);
 
@@ -114,9 +115,9 @@ export const playersRouter = createTRPCRouter({
                 PlayerStatline: {
                   connectOrCreate: {
                     where: {
-                      id: structuredPlayerStatlineData[index].id ?? "",
+                      id: playerStatlineData.id, // Ensure this is not undefined
                     },
-                    create: structuredPlayerStatlineData[index],
+                    create: playerStatlineData, // Ensure this is not undefined
                   },
                 },
               },
@@ -124,9 +125,9 @@ export const playersRouter = createTRPCRouter({
                 PlayerStatline: {
                   connectOrCreate: {
                     where: {
-                      id: structuredPlayerStatlineData[index].id,
+                      id: playerStatlineData.id, // Ensure this is not undefined
                     },
-                    create: structuredPlayerStatlineData[index],
+                    create: playerStatlineData, // Ensure this is not undefined
                   },
                 },
               },
