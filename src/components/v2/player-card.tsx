@@ -12,6 +12,7 @@ import {
 } from ":)/components/ui/dialog";
 import PlayerCardDialog from ":)/components/v2/player-card-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { useState, useEffect } from "react";
 
 interface PlayerCardProps {
   // make the player prop ben the Player with PlayerStatline
@@ -19,15 +20,56 @@ interface PlayerCardProps {
 }
 
 export default function PlayerCard({ player }: PlayerCardProps) {
+  const [isStale, setIsStale] = useState(false);
+  const ctx = api.useContext();
+
+  const { mutate: syncPlayerData } =
+    api.players.syncPlayerFantasyStatsById.useMutation({
+      onSuccess: async () => {
+        console.log("🌟 Player data synced.");
+        setIsStale(false);
+        void ctx.players.getRosterPlayers.invalidate();
+      },
+      onError: (error) => {
+        console.log("Failed to sync player data:", error);
+      },
+    });
+
   function aggregateFantasyPoints() {
     const fantasyPoints = player.PlayerStatline.map(
       (statline) => statline.fantasy_pts
     );
-
     const aggregate = fantasyPoints.reduce((acc, curr) => acc + curr, 0);
-
     return aggregate.toFixed(2);
   }
+
+  useEffect(() => {
+    if (player.updated_at) {
+      const updated = new Date(player.updated_at);
+      const today = new Date();
+      const diff = today.getTime() - updated.getTime();
+      const days = diff / (1000 * 60 * 60 * 24);
+
+      if (days > 2 && !isStale) {
+        console.log("Warning: Player data is more than 2 days old.");
+        setIsStale(true);
+      }
+    }
+  }, [player.updated_at, isStale]);
+
+  // Trigger data sync only when `isStale` becomes `true`
+  useEffect(() => {
+    if (isStale) {
+      // TODO: Figure out defense player_id syncing
+      if (player.position === "DEF") {
+        return;
+      }
+      syncPlayerData({
+        player_id: player.player_id,
+        espn_id: player.espn_id || 0,
+      });
+    }
+  }, [isStale, syncPlayerData, player.player_id, player.espn_id]);
 
   return (
     <Dialog>
@@ -53,6 +95,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   alt={`${player.first_name} ${player.last_name}`}
                   width={50}
                   height={50}
+                  style={{ width: "auto", height: "auto" }}
                 />
               ) : (
                 <Image
@@ -60,6 +103,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
                   alt={`${player.first_name} ${player.last_name}`}
                   width={50}
                   height={50}
+                  style={{ width: "auto", height: "auto" }}
                 />
               )}
             </div>
