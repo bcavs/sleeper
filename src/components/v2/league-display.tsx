@@ -50,11 +50,7 @@ export default function LeagueDisplay(props: { leagueId: string }) {
   const sortedRosters = data.sort((a, b) => {
     // if the wins are the same, sort by points for
     if (a.settings?.wins === b.settings?.wins) {
-      return (
-        b.settings?.fpts +
-        b.settings?.fpts_decimal -
-        (a.settings?.fpts + a.settings?.fpts_decimal)
-      );
+      return b.settings?.fpts - a.settings?.fpts;
     }
 
     // otherwise, sort by wins
