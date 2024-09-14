@@ -119,7 +119,7 @@ export const fetchPlayerFantasyStats = async ({
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
 
-  const season = "2023";
+  const season = "2024";
   const url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=${playerEspnId}&season=${season}&fantasyPoints=true&${scoringSettingsQueryString}`;
   const options = {
     method: "GET",

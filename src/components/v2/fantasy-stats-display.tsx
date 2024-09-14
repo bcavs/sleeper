@@ -169,15 +169,33 @@ export default function FantasyStatsDisplay({
       </div>
       {/* Last updated info */}
       <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
-        <p>{playerData.player_id ? playerData.player_id : "N/A"}</p>
+        <p>Player ID: {playerData.player_id ? playerData.player_id : "N/A"}</p>
         <div className="h-1 w-1 rounded-full bg-slate-300" />
-        <p>{playerData.espn_id ? playerData.espn_id : "N/A"}</p>
+        <p>Player ESPN ID:{playerData.espn_id ? playerData.espn_id : "N/A"}</p>
         <div className="h-1 w-1 rounded-full bg-slate-300" />
         <p>
-          Last updated: {playerData.updated_at?.getMonth()}/
-          {playerData.updated_at?.getDate()}/
+          Last updated:{" "}
+          {playerData.updated_at?.getMonth() &&
+            playerData.updated_at?.getMonth() + 1}
+          /{playerData.updated_at?.getDate()}/
           {playerData.updated_at?.getFullYear()}
         </p>
+        <button
+          onClick={() => {
+            if (!playerData.espn_id) {
+              toast.error("Player ESPN ID is missing.");
+              return;
+            }
+
+            syncPlayerData({
+              espn_id: playerData.espn_id,
+              player_id: playerData.player_id,
+            });
+          }}
+          className="flex items-center gap-1 text-xs text-red-500"
+        >
+          Refresh <RefreshCw size={12} />
+        </button>
       </div>
     </>
   );
