@@ -114,7 +114,7 @@ export const playersRouter = createTRPCRouter({
                 PlayerStatline: {
                   connectOrCreate: {
                     where: {
-                      id: structuredPlayerStatlineData[index].id,
+                      id: structuredPlayerStatlineData[index].id ?? "",
                     },
                     create: structuredPlayerStatlineData[index],
                   },
