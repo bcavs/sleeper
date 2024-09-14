@@ -55,8 +55,7 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
     }
   );
 
-  // sort the players by position
-  // Order them in this order: QB, WR, RB, TE, K, DEF
+  // sort the players by position in this order: QB, WR, RB, TE, K, DEF
   const sortedPlayers = rosterPlayers?.sort((a, b) => {
     const positions = ["QB", "WR", "RB", "TE", "K", "DEF"];
     return (

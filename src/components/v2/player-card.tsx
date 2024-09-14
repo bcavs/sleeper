@@ -1,6 +1,6 @@
 import { cn } from ":)/utils";
 import { api } from ":)/utils/api";
-import { Player } from "@prisma/client";
+import { Player, PlayerStatline } from "@prisma/client";
 import Image from "next/image";
 import {
   Dialog,
@@ -13,7 +13,22 @@ import {
 import PlayerCardDialog from ":)/components/v2/player-card-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
-export default function PlayerCard({ player }: { player: Player }) {
+interface PlayerCardProps {
+  // make the player prop ben the Player with PlayerStatline
+  player: Player & { PlayerStatline: PlayerStatline[] };
+}
+
+export default function PlayerCard({ player }: PlayerCardProps) {
+  function aggregateFantasyPoints() {
+    const fantasyPoints = player.PlayerStatline.map(
+      (statline) => statline.fantasy_pts
+    );
+
+    console.log("fantasyPoints", fantasyPoints);
+
+    return fantasyPoints.reduce((acc, curr) => acc + curr, 0);
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -75,6 +90,11 @@ export default function PlayerCard({ player }: { player: Player }) {
                 {player.position}
               </p>
             </div>
+          </div>
+          <div className="bg-red-300">
+            <p>Fantasy Points</p>
+            <p>{player.age}</p>
+            <p>{aggregateFantasyPoints()}</p>
           </div>
         </li>
       </DialogTrigger>
