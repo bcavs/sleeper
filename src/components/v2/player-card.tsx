@@ -63,7 +63,9 @@ export default function PlayerCard({ player }: PlayerWithStats) {
       const days = diff / (1000 * 60 * 60 * 24);
 
       if (days > 2 && !isStale) {
-        console.log("Warning: Player data is more than 2 days old.");
+        console.log(
+          `Warning: Player data: ${player.full_name} is more than 2 days old.`
+        );
         setIsStale(true);
       }
     }
