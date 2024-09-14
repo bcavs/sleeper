@@ -55,12 +55,36 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
     }
   );
 
+  const playerWithPointsAggregated = rosterPlayers?.map((player) => {
+    const fantasyPoints = player.PlayerStatline.map((statline) => {
+      // expected gameId format: "20241012_CHI@GB"
+      const game_date = statline.game_id.split("_")[0] ?? "";
+
+      // Exclude games before 2024 regular season
+      if (game_date < "20240901") {
+        return 0;
+      }
+
+      return statline.fantasy_pts;
+    });
+    const aggregate = fantasyPoints.reduce((acc, curr) => acc + curr, 0);
+    return { ...player, aggregate };
+  });
+
   // sort the players by position in this order: QB, WR, RB, TE, K, DEF
-  const sortedPlayers = rosterPlayers?.sort((a, b) => {
-    const positions = ["QB", "WR", "RB", "TE", "K", "DEF"];
-    return (
-      positions.indexOf(a.position ?? "") - positions.indexOf(b.position ?? "")
-    );
+  // then sort by aggregate points
+  const sortedPlayers = playerWithPointsAggregated?.sort((a, b) => {
+    if (!a.position || !b.position) return 0;
+
+    const positionOrder = ["QB", "WR", "RB", "TE", "K", "DEF"];
+    const positionA = positionOrder.indexOf(a.position);
+    const positionB = positionOrder.indexOf(b.position);
+
+    if (positionA === positionB) {
+      return b.aggregate - a.aggregate;
+    }
+
+    return positionA - positionB;
   });
 
   return (
@@ -110,7 +134,13 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
           </section>
           <ul role="list" className="flex w-full flex-grow flex-col gap-4">
             {sortedPlayers?.map((player) => {
-              return <PlayerCard key={player.player_id} player={player} />;
+              return (
+                <PlayerCard
+                  key={player.player_id}
+                  player={player}
+                  fantasy_points={player.aggregate}
+                />
+              );
             })}
           </ul>
         </div>

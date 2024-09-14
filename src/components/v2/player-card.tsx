@@ -19,7 +19,14 @@ export interface PlayerWithStats {
   player: Player & { PlayerStatline: PlayerStatline[] };
 }
 
-export default function PlayerCard({ player }: PlayerWithStats) {
+interface PlayerCardProps extends PlayerWithStats {
+  fantasy_points: number;
+}
+
+export default function PlayerCard({
+  player,
+  fantasy_points,
+}: PlayerCardProps) {
   const [isStale, setIsStale] = useState(false);
   const ctx = api.useContext();
 
@@ -34,26 +41,6 @@ export default function PlayerCard({ player }: PlayerWithStats) {
         console.log("Failed to sync player data:", error);
       },
     });
-
-  function aggregateFantasyPoints({
-    excludePreseaon,
-  }: {
-    excludePreseaon: boolean;
-  }) {
-    const fantasyPoints = player.PlayerStatline.map((statline) => {
-      // expected gameId format: "20241012_CHI@GB"
-      const game_date = statline.game_id.split("_")[0] ?? "";
-
-      // Exclude games before 2024 regular season
-      if (excludePreseaon && game_date < "20240901") {
-        return 0;
-      }
-
-      return statline.fantasy_pts;
-    });
-    const aggregate = fantasyPoints.reduce((acc, curr) => acc + curr, 0);
-    return aggregate.toFixed(2);
-  }
 
   useEffect(() => {
     if (player.updated_at) {
@@ -152,9 +139,7 @@ export default function PlayerCard({ player }: PlayerWithStats) {
               <span className="hidden md:block">Fantasy Points</span>
               <span className="md:hidden">FPTS</span>
             </p>
-            <p className={cn("text-[18px] text-white")}>
-              {aggregateFantasyPoints({ excludePreseaon: true })}
-            </p>
+            <p className={cn("text-[18px] text-white")}>{fantasy_points}</p>
           </div>
         </li>
       </DialogTrigger>
