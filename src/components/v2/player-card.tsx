@@ -24,9 +24,9 @@ export default function PlayerCard({ player }: PlayerCardProps) {
       (statline) => statline.fantasy_pts
     );
 
-    console.log("fantasyPoints", fantasyPoints);
+    const aggregate = fantasyPoints.reduce((acc, curr) => acc + curr, 0);
 
-    return fantasyPoints.reduce((acc, curr) => acc + curr, 0);
+    return aggregate.toFixed(2);
   }
 
   return (
@@ -34,7 +34,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
       <DialogTrigger asChild>
         <li
           className={cn(
-            `flex cursor-pointer justify-between rounded bg-slate-500 bg-opacity-10 p-2 py-5 transition-all hover:bg-opacity-25`,
+            `flex cursor-pointer justify-between rounded bg-slate-500 bg-opacity-10 py-5 pl-2 pr-8 transition-all hover:bg-opacity-25`,
             {
               "bg-red-500": player.position === "QB",
               "bg-blue-500": player.position === "WR",
@@ -46,25 +46,23 @@ export default function PlayerCard({ player }: PlayerCardProps) {
           )}
         >
           <div className="flex items-center gap-x-6">
-            {player.position === "DEF" ? (
-              <Image
-                src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
-                alt={`${player.first_name} ${player.last_name}`}
-                width={50}
-                height={50}
-                className="h-16 w-16 rounded-full"
-                style={{ height: "auto", width: "auto" }}
-              />
-            ) : (
-              <Image
-                src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
-                alt={`${player.first_name} ${player.last_name}`}
-                width={50}
-                className="h-16 w-16 rounded-full"
-                height={50}
-                style={{ height: "auto", width: "auto" }}
-              />
-            )}
+            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full md:h-16 md:w-16 ">
+              {player.position === "DEF" ? (
+                <Image
+                  src={`https://sleepercdn.com/images/team_logos/nfl/${player.player_id?.toLowerCase()}.png`}
+                  alt={`${player.first_name} ${player.last_name}`}
+                  width={50}
+                  height={50}
+                />
+              ) : (
+                <Image
+                  src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
+                  alt={`${player.first_name} ${player.last_name}`}
+                  width={50}
+                  height={50}
+                />
+              )}
+            </div>
             <div>
               <h3
                 className={cn(
@@ -91,10 +89,14 @@ export default function PlayerCard({ player }: PlayerCardProps) {
               </p>
             </div>
           </div>
-          <div className="bg-red-300">
-            <p>Fantasy Points</p>
-            <p>{player.age}</p>
-            <p>{aggregateFantasyPoints()}</p>
+          <div className="space-y-1 text-center">
+            <p className={cn("text-[12px] text-slate-300")}>
+              <span className="hidden md:block">Fantasy Points</span>
+              <span className="md:hidden">FPTS</span>
+            </p>
+            <p className={cn("text-[18px] text-white")}>
+              {aggregateFantasyPoints()}
+            </p>
           </div>
         </li>
       </DialogTrigger>

@@ -11,12 +11,14 @@ export default function FantasyStatsDisplay({
   player_id: string;
 }) {
   const [isStale, setIsStale] = useState(false);
+  const ctx = api.useContext();
 
   const { mutate: syncPlayerData } =
     api.players.syncPlayerFantasyStatsById.useMutation({
       onSuccess: async () => {
         setIsStale(false);
         console.log("🌟 Player data synced.");
+        void ctx.players.getRosterPlayers.invalidate();
         await refetch();
       },
       onError: (error) => {
