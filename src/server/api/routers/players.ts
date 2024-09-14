@@ -101,8 +101,6 @@ export const playersRouter = createTRPCRouter({
             const playerStatlineData = structuredPlayerStatlineData[index];
             if (!playerStatlineData?.id) return;
 
-            console.log("Upserting game:", game.game_id, game);
-
             return ctx.prisma.game.upsert({
               where: {
                 game_id: game.game_id,
@@ -112,6 +110,7 @@ export const playersRouter = createTRPCRouter({
                 game_date: game.game_date,
                 away_team_abbr: game.away_team_abbr,
                 home_team_abbr: game.home_team_abbr,
+                season_phase: game.game_date < "20240901" ? "PRE" : "REG",
                 PlayerStatline: {
                   connectOrCreate: {
                     where: {
@@ -141,7 +140,7 @@ export const playersRouter = createTRPCRouter({
           },
           data: {
             fantasy_stats: JSON.stringify(playerFantasyStats.body),
-            updated_at: new Date(),
+            updated_at: new Date(), // current date
           },
         });
 

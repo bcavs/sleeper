@@ -107,6 +107,7 @@ model Game {
   home_team_abbr String
   away_team_abbr String
   game_date      String
+  season_phase   String           @default("REG")
   PlayerStatline PlayerStatline[]
 }
 
