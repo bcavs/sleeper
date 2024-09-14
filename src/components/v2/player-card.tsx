@@ -35,10 +35,22 @@ export default function PlayerCard({ player }: PlayerWithStats) {
       },
     });
 
-  function aggregateFantasyPoints() {
-    const fantasyPoints = player.PlayerStatline.map(
-      (statline) => statline.fantasy_pts
-    );
+  function aggregateFantasyPoints({
+    excludePreseaon,
+  }: {
+    excludePreseaon: boolean;
+  }) {
+    const fantasyPoints = player.PlayerStatline.map((statline) => {
+      // expected gameId format: "20241012_CHI@GB"
+      const game_date = statline.game_id.split("_")[0] ?? "";
+
+      // Exclude games before 2024 regular season
+      if (excludePreseaon && game_date < "20240901") {
+        return 0;
+      }
+
+      return statline.fantasy_pts;
+    });
     const aggregate = fantasyPoints.reduce((acc, curr) => acc + curr, 0);
     return aggregate.toFixed(2);
   }
@@ -139,7 +151,7 @@ export default function PlayerCard({ player }: PlayerWithStats) {
               <span className="md:hidden">FPTS</span>
             </p>
             <p className={cn("text-[18px] text-white")}>
-              {aggregateFantasyPoints()}
+              {aggregateFantasyPoints({ excludePreseaon: true })}
             </p>
           </div>
         </li>
