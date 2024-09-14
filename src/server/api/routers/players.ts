@@ -99,7 +99,7 @@ export const playersRouter = createTRPCRouter({
         await Promise.all(
           structuredGameData.map((game, index) => {
             const playerStatlineData = structuredPlayerStatlineData[index];
-            if (!playerStatlineData || !playerStatlineData.id) return;
+            if (!playerStatlineData?.id) return;
 
             console.log("Upserting game:", game.game_id, game);
 
