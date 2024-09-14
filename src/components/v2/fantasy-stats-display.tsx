@@ -30,6 +30,35 @@ export default function FantasyStatsDisplay({ player }: PlayerWithStats) {
     return;
   }
 
+  // Sort stats by game date (derived from gameId)
+  statsArray.sort((a, b) => {
+    const dateA = getGameDate(a[0]) ?? "";
+    const dateB = getGameDate(b[0]) ?? "";
+    return dateA.localeCompare(dateB);
+  });
+
+  const preseasonCutoff = "20240901";
+
+  function getGameDate(gameId: string) {
+    const dateString = gameId.split("_")[0];
+    if (!dateString) return;
+
+    const year = dateString.slice(0, 4);
+    const month = dateString.slice(4, 6);
+    const day = dateString.slice(6, 8);
+
+    return `${year}-${month}-${day}`;
+  }
+
+  function getGameMatchup(gameId: string) {
+    const matchup = gameId.split("_")[1];
+    if (!matchup) return;
+
+    return matchup;
+  }
+
+  let insertedDivider = false; // Flag to track if we've added the divider
+
   return (
     <>
       <div className="h-full max-h-[100%] w-full">
@@ -38,53 +67,55 @@ export default function FantasyStatsDisplay({ player }: PlayerWithStats) {
           teamAbbr={player.team_abbr ?? ""}
         />
         <ul className="p-4">
-          {statsArray.map((game) => {
+          {statsArray.map((game, index) => {
             const gameId = game[0];
             const gameStats = game[1];
+            const gameDate = gameId.split("_")[0]; // Extract the game date (YYYYMMDD)
 
-            const getGameDate = (gameId: string) => {
-              const dateString = gameId.split("_")[0];
-              if (!dateString) return;
+            if (!gameDate) return;
 
-              const year = dateString.slice(0, 4);
-              const month = dateString.slice(4, 6);
-              const day = dateString.slice(6, 8);
+            const showDivider = !insertedDivider && gameDate >= preseasonCutoff;
 
-              return `${year}-${month}-${day}`;
-            };
-
-            const getGameMatchup = (gameId: string) => {
-              const matchup = gameId.split("_")[1];
-              if (!matchup) return;
-
-              return matchup;
-            };
+            if (showDivider) {
+              insertedDivider = true; // Avoid inserting the divider again
+            }
 
             return (
-              <li key={gameId} className="my-5 divide-y-2 ">
-                <div className="flex items-center gap-3">
-                  <h3 className="font-bold">{`${getGameMatchup(gameId)}`}</h3>
-                  <p className="text-xs text-slate-500">{`${getGameDate(
-                    gameId
-                  )}`}</p>
-                </div>
-                <ul>
-                  <li className="max-w-[250px]">
-                    <p>
-                      Fantasy Points:{" "}
-                      {`${
-                        typeof gameStats?.fantasyPoints === "string"
-                          ? gameStats?.fantasyPoints
-                          : "0"
-                      }`}
+              <div key={`game-${index}`}>
+                {showDivider && (
+                  <li key={`divider-${index}`} className="my-4 text-center">
+                    <hr />
+                    <p className="text-lg font-bold text-slate-500">
+                      ⬇️ Regular Season ⬇️
                     </p>
+                    <hr />
                   </li>
-                </ul>
-              </li>
+                )}
+
+                <li key={gameId} className="my-5 divide-y-2">
+                  <div className="flex items-center gap-3">
+                    <h3 className="font-bold">{getGameMatchup(gameId)}</h3>
+                    <p className="text-xs text-slate-500">
+                      {getGameDate(gameId)}
+                    </p>
+                  </div>
+                  <ul>
+                    <li className="max-w-[250px]">
+                      <p>
+                        Fantasy Points:{" "}
+                        {typeof gameStats?.fantasyPoints === "string"
+                          ? gameStats?.fantasyPoints
+                          : "0"}
+                      </p>
+                    </li>
+                  </ul>
+                </li>
+              </div>
             );
           })}
         </ul>
       </div>
+
       {/* Last updated info */}
       <div className="absolute bottom-1 right-2 flex items-center gap-2 text-xs text-slate-300">
         <p>Player ID: {player.player_id ? player.player_id : "N/A"}</p>
