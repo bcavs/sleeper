@@ -14,12 +14,12 @@ import PlayerCardDialog from ":)/components/v2/player-card-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useState, useEffect } from "react";
 
-interface PlayerCardProps {
+export interface PlayerWithStats {
   // make the player prop ben the Player with PlayerStatline
   player: Player & { PlayerStatline: PlayerStatline[] };
 }
 
-export default function PlayerCard({ player }: PlayerCardProps) {
+export default function PlayerCard({ player }: PlayerWithStats) {
   const [isStale, setIsStale] = useState(false);
   const ctx = api.useContext();
 

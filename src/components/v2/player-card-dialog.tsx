@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from ":)/utils";
 import FantasyStatsDisplay from "./fantasy-stats-display";
+import { PlayerWithStats } from "./player-card";
 
-const PlayerCardDialog = ({ player }: { player: Player }) => {
+const PlayerCardDialog = ({ player }: PlayerWithStats) => {
   return (
     <div className="flex h-full  flex-col items-center gap-4 overflow-hidden">
       <div className="flex w-full items-center p-4">
@@ -57,7 +58,7 @@ const PlayerCardDialog = ({ player }: { player: Player }) => {
       </div>
 
       <div className="relative grid h-full w-full grid-cols-1 overflow-hidden">
-        <FantasyStatsDisplay player_id={player.player_id} />
+        <FantasyStatsDisplay player={player} />
       </div>
     </div>
   );
