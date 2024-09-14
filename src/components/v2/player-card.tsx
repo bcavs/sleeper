@@ -21,11 +21,13 @@ export interface PlayerWithStats {
 
 interface PlayerCardProps extends PlayerWithStats {
   fantasy_points: number;
+  games_played: number;
 }
 
 export default function PlayerCard({
   player,
   fantasy_points,
+  games_played,
 }: PlayerCardProps) {
   const [isStale, setIsStale] = useState(false);
   const ctx = api.useContext();
@@ -136,12 +138,30 @@ export default function PlayerCard({
               </p>
             </div>
           </div>
-          <div className="space-y-1 text-center">
-            <p className={cn("text-[12px] text-slate-300")}>
-              <span className="hidden md:block">Fantasy Points</span>
-              <span className="md:hidden">FPTS</span>
-            </p>
-            <p className={cn("text-[18px] text-white")}>{fantasy_points}</p>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-1 text-center">
+              <p className={cn("text-[12px] text-slate-300")}>
+                <span className="hidden md:block">Fantasy Points</span>
+                <span className="md:hidden">FPTS</span>
+              </p>
+              <p className={cn("text-[18px] text-white")}>{fantasy_points}</p>
+            </div>
+            <div className="space-y-1 text-center">
+              <p className={cn("text-[12px] text-slate-300")}>
+                <span className="hidden md:block">Games Played</span>
+                <span className="md:hidden">GP</span>
+              </p>
+              <p className={cn("text-[18px] text-white")}>{games_played}</p>
+            </div>
+            <div className="space-y-1 text-center">
+              <p className={cn("text-[12px] text-slate-300")}>
+                <span className="hidden md:block">Points Per Game</span>
+                <span className="md:hidden">PPG</span>
+              </p>
+              <p className={cn("text-[18px] text-white")}>
+                {(fantasy_points / games_played).toFixed(2)}
+              </p>
+            </div>
           </div>
         </li>
       </DialogTrigger>

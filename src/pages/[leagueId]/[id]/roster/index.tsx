@@ -12,6 +12,10 @@ interface RosterPageProps {
   leagueId: string;
 }
 
+const settings = {
+  includePreseason: false,
+};
+
 const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
   const {
     data: userData,
@@ -57,11 +61,8 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
 
   const playerWithPointsAggregated = rosterPlayers?.map((player) => {
     const fantasyPoints = player.PlayerStatline.map((statline) => {
-      // expected gameId format: "20241012_CHI@GB"
-      const game_date = statline.game_id.split("_")[0] ?? "";
-
-      // Exclude games before 2024 regular season
-      if (game_date < "20240901") {
+      // NOTE: Exclude games before 2024 regular season (PRESEASON)
+      if (statline.game.season_phase === "PRE" && !settings.includePreseason) {
         return 0;
       }
 
@@ -71,9 +72,21 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
     return { ...player, aggregate };
   });
 
+  const playerWithGameCount = playerWithPointsAggregated?.map((player) => {
+    const count = player.PlayerStatline.reduce((acc, curr) => {
+      if (curr.game.season_phase === "REG") {
+        return acc + 1;
+      }
+
+      return acc;
+    }, 0);
+
+    return { ...player, count };
+  });
+
   // sort the players by position in this order: QB, WR, RB, TE, K, DEF
   // then sort by aggregate points
-  const sortedPlayers = playerWithPointsAggregated?.sort((a, b) => {
+  const sortedPlayers = playerWithGameCount?.sort((a, b) => {
     if (!a.position || !b.position) return 0;
 
     const positionOrder = ["QB", "WR", "RB", "TE", "K", "DEF"];
@@ -139,6 +152,7 @@ const RosterPage: NextPage<RosterPageProps> = ({ id, leagueId }) => {
                   key={player.player_id}
                   player={player}
                   fantasy_points={player.aggregate}
+                  games_played={player.count}
                 />
               );
             })}

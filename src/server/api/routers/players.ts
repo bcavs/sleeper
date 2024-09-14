@@ -81,6 +81,7 @@ export const playersRouter = createTRPCRouter({
             game_date,
             away_team_abbr,
             home_team_abbr,
+            season_phase: game_date < "20240901" ? "PRE" : "REG",
           };
         });
 
@@ -110,7 +111,7 @@ export const playersRouter = createTRPCRouter({
                 game_date: game.game_date,
                 away_team_abbr: game.away_team_abbr,
                 home_team_abbr: game.home_team_abbr,
-                season_phase: game.game_date < "20240901" ? "PRE" : "REG",
+                season_phase: game.season_phase,
                 PlayerStatline: {
                   connectOrCreate: {
                     where: {
@@ -166,7 +167,11 @@ export const playersRouter = createTRPCRouter({
             },
           },
           include: {
-            PlayerStatline: true,
+            PlayerStatline: {
+              include: {
+                game: true,
+              },
+            },
           },
         });
 
