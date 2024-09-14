@@ -58,6 +58,8 @@ export default function PlayerCard({
     }
   }, [player.updated_at, isStale]);
 
+  // TODO: Calculate how many games were regular season games
+
   // Trigger data sync only when `isStale` becomes `true`
   useEffect(() => {
     if (isStale) {
