@@ -25,7 +25,7 @@ export default function PlayerCard({ player }: PlayerWithStats) {
 
   const { mutate: syncPlayerData } =
     api.players.syncPlayerFantasyStatsById.useMutation({
-      onSuccess: async () => {
+      onSuccess: () => {
         console.log("🌟 Player data synced.");
         setIsStale(false);
         void ctx.players.getRosterPlayers.invalidate();
@@ -80,7 +80,7 @@ export default function PlayerCard({ player }: PlayerWithStats) {
       }
       syncPlayerData({
         player_id: player.player_id,
-        espn_id: player.espn_id || 0,
+        espn_id: player.espn_id ?? 0,
       });
     }
   }, [isStale, syncPlayerData, player.player_id, player.espn_id]);
